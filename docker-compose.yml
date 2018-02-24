@@ -1,0 +1,14 @@
+version: '3.1'
+services:
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+        - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    ports:
+      - "5432:5432"
+    environment:
+        PGDATA: /var/postgres_data
+        POSTGRES_USER: pguser
+        POSTGRES_PASSWORD: pguser
+        POSTGRES_DB: pgdb

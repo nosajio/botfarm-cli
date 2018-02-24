@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://gitlab.com/nosaj/botfarm/issues"
   },
-  "homepage": "https://gitlab.com/nosaj/botfarm#README"
+  "homepage": "https://gitlab.com/nosaj/botfarm#README",
+  "dependencies": {
+    "debug": "^3.1.0"
+  }
 }
