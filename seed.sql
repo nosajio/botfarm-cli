@@ -49,6 +49,68 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 SET search_path = public, pg_catalog;
 
 --
+-- Name: bot_output_seq; Type: SEQUENCE; Schema: public; Owner: pguser
+--
+
+CREATE SEQUENCE bot_output_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE bot_output_seq OWNER TO pguser;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: bots_output; Type: TABLE; Schema: public; Owner: pguser
+--
+
+CREATE TABLE bots_output (
+    id integer DEFAULT nextval('bot_output_seq'::regclass) NOT NULL,
+    type character varying(32) NOT NULL,
+    output text,
+    bot_filename character varying(255),
+    farm_id integer
+);
+
+
+ALTER TABLE bots_output OWNER TO pguser;
+
+--
+-- Name: bots_runlog_seq; Type: SEQUENCE; Schema: public; Owner: pguser
+--
+
+CREATE SEQUENCE bots_runlog_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE bots_runlog_seq OWNER TO pguser;
+
+--
+-- Name: bots_runlog; Type: TABLE; Schema: public; Owner: pguser
+--
+
+CREATE TABLE bots_runlog (
+    id integer DEFAULT nextval('bots_runlog_seq'::regclass) NOT NULL,
+    "time" timestamp with time zone,
+    bot_filename character varying(255),
+    output_id integer,
+    status character varying(32)
+);
+
+
+ALTER TABLE bots_runlog OWNER TO pguser;
+
+--
 -- Name: farms_seq; Type: SEQUENCE; Schema: public; Owner: pguser
 --
 
@@ -61,10 +123,6 @@ CREATE SEQUENCE farms_seq
 
 
 ALTER TABLE farms_seq OWNER TO pguser;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
 
 --
 -- Name: farms; Type: TABLE; Schema: public; Owner: pguser
@@ -82,7 +140,23 @@ CREATE TABLE farms (
 ALTER TABLE farms OWNER TO pguser;
 
 --
--- Some seed data for dev only
+-- Data for Name: bots_output; Type: TABLE DATA; Schema: public; Owner: pguser
+--
+
+COPY bots_output (id, type, output, bot_filename, farm_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: bots_runlog; Type: TABLE DATA; Schema: public; Owner: pguser
+--
+
+COPY bots_runlog (id, "time", bot_filename, output_id, status) FROM stdin;
+\.
+
+
+--
+-- Data for Name: farms; Type: TABLE DATA; Schema: public; Owner: pguser
 --
 
 COPY farms (id, uuid, name, slug, repository) FROM stdin;
@@ -91,10 +165,40 @@ COPY farms (id, uuid, name, slug, repository) FROM stdin;
 
 
 --
+-- Name: bot_output_seq; Type: SEQUENCE SET; Schema: public; Owner: pguser
+--
+
+SELECT pg_catalog.setval('bot_output_seq', 1, false);
+
+
+--
+-- Name: bots_runlog_seq; Type: SEQUENCE SET; Schema: public; Owner: pguser
+--
+
+SELECT pg_catalog.setval('bots_runlog_seq', 1, false);
+
+
+--
 -- Name: farms_seq; Type: SEQUENCE SET; Schema: public; Owner: pguser
 --
 
 SELECT pg_catalog.setval('farms_seq', 1, true);
+
+
+--
+-- Name: bots_output bot_output_pkey; Type: CONSTRAINT; Schema: public; Owner: pguser
+--
+
+ALTER TABLE ONLY bots_output
+    ADD CONSTRAINT bot_output_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bots_runlog bots_runlog_pkey; Type: CONSTRAINT; Schema: public; Owner: pguser
+--
+
+ALTER TABLE ONLY bots_runlog
+    ADD CONSTRAINT bots_runlog_pkey PRIMARY KEY (id);
 
 
 --
@@ -111,6 +215,22 @@ ALTER TABLE ONLY farms
 
 ALTER TABLE ONLY farms
     ADD CONSTRAINT farms_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: bots_output bot_output_farm_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: pguser
+--
+
+ALTER TABLE ONLY bots_output
+    ADD CONSTRAINT bot_output_farm_id_fkey FOREIGN KEY (farm_id) REFERENCES farms(id) ON DELETE CASCADE;
+
+
+--
+-- Name: bots_runlog bots_runlog_output_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: pguser
+--
+
+ALTER TABLE ONLY bots_runlog
+    ADD CONSTRAINT bots_runlog_output_id_fkey FOREIGN KEY (output_id) REFERENCES bots_output(id) ON DELETE CASCADE;
 
 
 --
