@@ -75,8 +75,9 @@ CREATE TABLE bot_history (
     "time" timestamp with time zone,
     output_id integer,
     status character varying(32),
-    bot_filename character varying(255),
-    farm_id integer
+    bot_name character varying(255),
+    farm_id integer,
+    bot_filename character varying(255)
 );
 
 
@@ -105,7 +106,7 @@ CREATE TABLE bot_outputs (
     type character varying(32) NOT NULL,
     output text,
     farm_id integer,
-    bot_filename character varying(255)
+    bot_name character varying(255)
 );
 
 
@@ -131,13 +132,20 @@ ALTER TABLE queue_id_seq OWNER TO pguser;
 
 CREATE TABLE bot_queue (
     id integer DEFAULT nextval('queue_id_seq'::regclass) NOT NULL,
-    filename character varying(255),
     "time" timestamp with time zone,
-    farm_id integer
+    farm_id integer,
+    bot_name character varying(255)
 );
 
 
 ALTER TABLE bot_queue OWNER TO pguser;
+
+--
+-- Name: COLUMN bot_queue.bot_name; Type: COMMENT; Schema: public; Owner: pguser
+--
+
+COMMENT ON COLUMN bot_queue.bot_name IS 'The name of the bot within the botfile';
+
 
 --
 -- Name: bots_seq; Type: SEQUENCE; Schema: public; Owner: pguser
@@ -193,7 +201,7 @@ COMMENT ON COLUMN farms.slug IS 'Should be the same as the name of the dir in us
 -- Data for Name: bot_history; Type: TABLE DATA; Schema: public; Owner: pguser
 --
 
-COPY bot_history (id, "time", output_id, status, bot_filename, farm_id) FROM stdin;
+COPY bot_history (id, "time", output_id, status, bot_name, farm_id, bot_filename) FROM stdin;
 \.
 
 
@@ -201,7 +209,7 @@ COPY bot_history (id, "time", output_id, status, bot_filename, farm_id) FROM std
 -- Data for Name: bot_outputs; Type: TABLE DATA; Schema: public; Owner: pguser
 --
 
-COPY bot_outputs (id, type, output, farm_id, bot_filename) FROM stdin;
+COPY bot_outputs (id, type, output, farm_id, bot_name) FROM stdin;
 \.
 
 
@@ -209,7 +217,7 @@ COPY bot_outputs (id, type, output, farm_id, bot_filename) FROM stdin;
 -- Data for Name: bot_queue; Type: TABLE DATA; Schema: public; Owner: pguser
 --
 
-COPY bot_queue (id, filename, "time", farm_id) FROM stdin;
+COPY bot_queue (id, "time", farm_id, bot_name) FROM stdin;
 \.
 
 
@@ -316,20 +324,3 @@ ALTER TABLE ONLY bot_outputs
 --
 -- Name: bot_queue bot_queue_farm_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: pguser
 --
-
-ALTER TABLE ONLY bot_queue
-    ADD CONSTRAINT bot_queue_farm_id_fkey FOREIGN KEY (farm_id) REFERENCES farms(id) ON DELETE CASCADE;
-
-
---
--- Name: bot_history bots_runlog_output_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: pguser
---
-
-ALTER TABLE ONLY bot_history
-    ADD CONSTRAINT bots_runlog_output_id_fkey FOREIGN KEY (output_id) REFERENCES bot_outputs(id) ON DELETE CASCADE;
-
-
---
--- PostgreSQL database dump complete
---
-
