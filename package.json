@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_PATH=. nodemon boot.js --ignore .userdata/"
+    "dev": "NODE_PATH=. nodemon boot.js --ignore .userdata/ --ignore scripts/",
+    "build_queue": "NODE_PATH=. node ./scripts/build-queue.js"
   },
   "repository": {
     "type": "git",

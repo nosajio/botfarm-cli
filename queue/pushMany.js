@@ -23,6 +23,7 @@ const pushMany = async bots => {
       ([botName, botProps]) => push({ farmId: 0, botName, time: botProps.runTimes[0] })
     );
   const results = await Promise.all(pushOps);
+  return results;
 }
 
 module.exports = pushMany

@@ -11,12 +11,11 @@ const queueTable = require('db').queue;
  * @param {string} item.botName
  * @param {Date}   item.time
  */
-const push = ({ farmId, botName, time }) => {
+const push = ({ farmId, botName, time }) => 
   queueTable.push({
     bot_name: botName,
     farmId,
     time
   });
-}
 
 module.exports = push

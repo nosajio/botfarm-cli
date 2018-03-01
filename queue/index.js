@@ -1,5 +1,6 @@
 module.exports = {
-  pushMany: require('./pushMany'),
+  clear: require('./clear'),
   push: require('./push'),
+  pushMany: require('./pushMany'),
   take: require('./take'),
 }
