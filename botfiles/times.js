@@ -116,20 +116,16 @@ const parseRunTime = autorunStr => {
   commands.forEach(c => {
     // 1 hour, 10 minutes, etc
     if (patterns.minsHrs.test(c)) {
-      debug('%s is minsHrs pattern', c);
       parsedTimes.push( parseMinsHrs(c) );
     } else
 
     if (patterns.exact.test(c)) {
-      debug('%s is exact pattern', c);
       parsedTimes.push( parseExact(c) );
     } else
 
     if (patterns.wildcard.test(c)) {
-      debug('%s is wildcard pattern', c);
       parsedTimes.push( parseWildcard(c) );
     } else {
-      debug('Can\'t parse %s', c);      
     }
   });
   return parsedTimes;
@@ -144,8 +140,9 @@ const parseRunTime = autorunStr => {
 const nextRunTimes = bots => {
   const botsWithRunTimes = {};
   Object.entries(bots).forEach(([botName, props]) => {
-    const botWithTime = { 
-      [botName]: { ...props, nextRunTime: parseRunTime(props.autorun) } 
+    const runTimes = parseRunTime(props.autorun);
+    const botWithTime = {
+      [botName]: { ...props, runTimes: runTimes.sort( datefns.compareAsc ) } 
     }
     Object.assign(botsWithRunTimes, botWithTime);
   });

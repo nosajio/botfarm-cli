@@ -7,7 +7,7 @@ const { USERDATA } = process.env;
 const userdataPath = path.resolve(`${__dirname}/../${USERDATA}`);
 
 /**! 
- *  Return all bots in .userdata as an object 
+ *  Return all bot paths in .userdata as an object 
  * 
  *  @return {object} bots - example:
  *    { 
@@ -35,7 +35,6 @@ const allBotfiles = () => {
       throw new Error(err);
     }
   });
-  debug(botfiles);
   return botfiles;
 };
 

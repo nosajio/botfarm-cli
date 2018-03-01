@@ -2,8 +2,8 @@ require('dotenv').config();
 
 const error = require('debug')('botfarm:error');
 const debug = require('debug')('botfarm:boot');
-const constructQueueFromBotfiles = require('bootstrap/constructQueueFromBotfiles');
 const { connect } = require('db');
+const constructQueueFromBotfiles = require('botfiles/constructQueueFromBotfiles');
 
 const runEvery = seconds => new Promise(resolve => {
   setTimeout(() => {
