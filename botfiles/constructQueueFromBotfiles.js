@@ -1,5 +1,5 @@
 const debug = require('debug')('botfarm:queue')
-const { allBotfiles } = require('bots/fs');
+const { allBotfiles } = require('filesystem');
 const { nextRunTimes } = require('./times');
 const queue = require('queue');
 

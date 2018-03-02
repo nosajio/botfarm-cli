@@ -22,12 +22,11 @@ module.exports = db => ({
   search: async ({ before }) => {
     let query, predicate;
     if (before) {
-      query = `SELECT * FROM bot_queue WHERE time >= $1::date`;
+      query = `SELECT * FROM bot_queue WHERE time <= $1::timestamp`;
       predicate = before;
     }
     const result = await db.query(query, [predicate]);
-    debug(result);
-    return result;
+    return result.rows;
   },
 
 
@@ -39,7 +38,8 @@ module.exports = db => ({
    */
   take: async ids => {
     try {
-      const rows = await db.query('DELETE FROM bot_queue WHERE id=$1 RETURNING *', [id]);
+      const rows = await db.query('SELECT FROM bot_queue WHERE id=$1', [id]);
+      // const rows = await db.query('DELETE FROM bot_queue WHERE id=$1 RETURNING *', [id]);
       return rows;
     } catch(err) {
       throw err;

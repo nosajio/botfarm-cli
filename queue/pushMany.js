@@ -13,14 +13,14 @@ const push = require('./push');
  * @param {array} bots.[botname].runTimes
  * @param {string}  bots.[botname].autorun
  */
-const pushMany = async bots => {
+const pushMany = async (bots, farmId) => {
   if (is.not.object(bots)) {
     throw new TypeError('bots arg is not an Object');
   }
   const pushOps = Object
     .entries(bots)
     .map(
-      ([botName, botProps]) => push({ farmId: 0, botName, time: botProps.runTimes[0] })
+      ([botName, botProps]) => push({ farm_id: farmId, botName, time: botProps.runTimes[0] })
     );
   const results = await Promise.all(pushOps);
   return results;
