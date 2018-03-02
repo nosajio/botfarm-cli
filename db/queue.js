@@ -1,3 +1,5 @@
+const debug = require('debug')('botfarm:db:queue');
+
 module.exports = db => ({
 
   /**
@@ -14,6 +16,18 @@ module.exports = db => ({
     } catch (err) {
       throw err;
     }
+  },
+
+
+  search: async ({ before }) => {
+    let query, predicate;
+    if (before) {
+      query = `SELECT * FROM bot_queue WHERE time >= $1::date`;
+      predicate = before;
+    }
+    const result = await db.query(query, [predicate]);
+    debug(result);
+    return result;
   },
 
 
