@@ -1,4 +1,4 @@
-const queueTable = require('db').queue;
+const queueCache = require('filesystem').cache.queue;
 
 /**
  * Functions for adding and removing items from the queue
@@ -12,7 +12,7 @@ const queueTable = require('db').queue;
  * @param {Date}   item.time
  */
 const push = ({ farmId, botName, time }) => 
-  queueTable.push({
+  queueCache.push({
     bot_name: botName,
     farmId,
     time

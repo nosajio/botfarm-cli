@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const error = require('debug')('botfarm:error');
 const debug = require('debug')('botfarm:boot');
-const { connect } = require('db');
 const { runner } = require('bots');
 
 const runEvery = seconds => new Promise(resolve => {
@@ -25,4 +24,4 @@ const boot = () => {
   runloop();
 }
 
-connect().then(() => boot());
+boot();

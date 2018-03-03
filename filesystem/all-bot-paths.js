@@ -3,8 +3,8 @@ const error = require('debug')('botfarm:error:bots:fs');
 const fs = require('fs');
 const path = require('path');
 
-const { USERDATA } = process.env;
-const userdataPath = path.resolve(`${__dirname}/../${USERDATA}`);
+const { FARMS } = process.env;
+const farmsPath = path.resolve(`${__dirname}/../${FARMS}`);
 
 /**! 
  *  Return all bot paths in .userdata as an object 
@@ -16,8 +16,8 @@ const userdataPath = path.resolve(`${__dirname}/../${USERDATA}`);
  *    }
  */
 const allBotPaths = () => {
-  const botfarms = fs.readdirSync(userdataPath, 'utf8');
-  const botfarmPaths = botfarms.map(dir => ([`${userdataPath}/${dir}`, dir]));
+  const botfarms = fs.readdirSync(farmsPath, 'utf8');
+  const botfarmPaths = botfarms.map(dir => ([`${farmsPath}/${dir}`, dir]));
   return botfarmPaths;
 };
 
