@@ -1,3 +1,6 @@
+const is = require('is_js');
+const debug = require('debug')('botfarm:db:query');
+
 /**
  * Simple promise wrapper around sqlite's run command
  */
@@ -9,7 +12,7 @@ const query = (db, str, params=[]) => new Promise(resolve => {
       if (err) {
         throw err;
       }
-      resolve(rows);
+      resolve(is.array(rows) ? rows : [rows]);
     });
   } else {
     db.run(str, params, (err) => {

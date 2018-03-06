@@ -12,7 +12,7 @@ module.exports = db => ({
    */
   push: async item => {
     try {
-      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, time, farm_id) VALUES ($1, $2, $3)', [item.bot_name, item.time, item.farm_id]);
+      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, time) VALUES ($1, $2)', [item.bot_name, item.time]);
       return rows;
     } catch (err) {
       throw err;
@@ -21,13 +21,13 @@ module.exports = db => ({
 
 
   search: async ({ before }) => {
-    let query, predicate;
+    let queryStr, predicate;
     if (before) {
-      query = `SELECT * FROM bot_queue WHERE time <= $1::timestamp`;
+      queryStr = `SELECT * FROM bot_queue WHERE time <= CAST($1 AS TIMESTAMP)`;
       predicate = before;
     }
-    const result = await query(db, query, [predicate]);
-    return result.rows;
+    const rows = await query(db, queryStr, [predicate]);
+    return rows;
   },
 
 
