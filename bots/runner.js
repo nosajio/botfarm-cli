@@ -1,6 +1,6 @@
 const debug = require('debug')('botfarm:queue:search');
 const error = require('debug')('botfarm:error:queue:search');
-const { findBotfile, cache: { queue } } = require('filesystem');
+const { findBotfile } = require('filesystem');
 
 /**
  * This file contains the toolkit for taking from the queue and running bots 

@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const error = require('debug')('botfarm:error');
 const debug = require('debug')('botfarm:boot');
+const db = require('db');
 const { runner } = require('bots');
 
 const runEvery = seconds => new Promise(resolve => {
