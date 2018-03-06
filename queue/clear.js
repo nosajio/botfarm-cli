@@ -1,5 +1,5 @@
-const queueCache = require('filesystem').cache.queue;
+const { queue } = require('db');
 
-const clear = () => queueCache.deleteAll();
+const clear = () => queue.deleteAll();
 
 module.exports = clear;

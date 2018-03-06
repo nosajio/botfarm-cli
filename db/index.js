@@ -14,7 +14,6 @@ const db = new Database(dbFileLocation, err => {
 
 module.exports = {
   instance: db,
-  farms:   require('./farms')(db),
   history: require('./history')(db),
   outputs: require('./outputs')(db),
   queue:   require('./queue')(db),

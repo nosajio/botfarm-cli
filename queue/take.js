@@ -1,4 +1,4 @@
-const queueCache = require('filesystem').cache.queue;
+const { queue } = require('db');
 
 /**
  * Take items from the queue
