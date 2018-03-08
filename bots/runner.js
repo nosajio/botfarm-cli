@@ -8,7 +8,7 @@ const { loadDueBots } = require('./loader');
 
 const runDueBots = async () => {
   const dueBots = await loadDueBots();
-
+  dueBots.forEach(b => b.loader());
 }
 
 

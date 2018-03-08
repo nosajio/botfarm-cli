@@ -6,7 +6,7 @@ const debug = require('debug')('botfarm:db:query');
  */
 
 const query = (db, str, params=[]) => new Promise(resolve => {
-  debug('Running query: %s, with params: %o', str, params);
+  debug('%s, params: %o', str, params);
   const isSelectQuery = str.includes('SELECT');
   if (isSelectQuery) {
     db.all(str, params, (err, rows) => {
