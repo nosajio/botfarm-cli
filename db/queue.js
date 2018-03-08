@@ -1,5 +1,6 @@
 const debug = require('debug')('botfarm:db:queue');
 const query = require('./query');
+const datefns = require('date-fns');
 
 module.exports = db => ({
 
@@ -23,8 +24,8 @@ module.exports = db => ({
   search: async ({ before }) => {
     let queryStr, predicate;
     if (before) {
-      queryStr = `SELECT * FROM bot_queue WHERE time <= CAST($1 AS TIMESTAMP)`;
-      predicate = before;
+      queryStr = `SELECT * FROM bot_queue WHERE time <= $1`;
+      predicate = datefns.format(before, 'x'); // Convert to unix style timestamp
     }
     const rows = await query(db, queryStr, [predicate]);
     return rows;

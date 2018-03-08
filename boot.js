@@ -13,7 +13,7 @@ const runEvery = seconds => new Promise(resolve => {
 
 const runloop = () => {
   //  Check for bots that need to be run
-  runEvery(12)
+  runEvery(5)
     .then(() => runner.runDueBots())
     .catch(err => error(err))
     // Finally, re-start the runloop 
