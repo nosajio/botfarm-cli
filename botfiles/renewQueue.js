@@ -1,16 +1,15 @@
 const debug = require('debug')('botfarm:queue')
-const { allBotfiles } = require('filesystem');
+const { farmsWithBotfiles } = require('farms');
 const { nextRunTimes } = require('./times');
 const queue = require('queue');
 
 const constructQueueFromBotfiles = async () => {
   // Clear the current queue
   try { queue.clear(); } catch(err) { throw err; }
-  // Iterate over bot dirs, then read all the entries in each botfile
-  const botfiles = allBotfiles();
-  const queueOps = Object.entries(botfiles).map(([farmName, bots]) => {
-    const botsWithRunTimes = nextRunTimes(bots);
-    return queue.pushMany(botsWithRunTimes);
+  const farms = await farmsWithBotfiles();
+  const queueOps = farms.map(farm => {
+    const botsWithRunTimes = nextRunTimes(farm.botfile);
+    return queue.pushMany(botsWithRunTimes, farm.id);
   });
   const queueOpsRes = await Promise.all(queueOps);
   return queueOpsRes;

@@ -13,7 +13,7 @@ module.exports = db => ({
    */
   push: async item => {
     try {
-      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, time) VALUES ($1, $2)', [item.bot_name, item.time]);
+      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, farm_id, time) VALUES ($1, $2, $3)', [item.bot_name, item.farm_id, item.time]);
       return rows;
     } catch (err) {
       throw err;

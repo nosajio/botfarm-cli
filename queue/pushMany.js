@@ -14,9 +14,8 @@ const push = require('./push');
  * @param {string}  bots.[botname].autorun
  */
 const pushMany = async (bots, farmId) => {
-  if (is.not.object(bots)) {
-    throw new TypeError('bots arg is not an Object');
-  }
+  if (is.not.object(bots)) throw new TypeError('bots arg is not an Object');
+  if (is.not.number(farmId)) throw new TypeError('pushMany expects farmId to be number');
   const pushOps = Object
     .entries(bots)
     .map(
