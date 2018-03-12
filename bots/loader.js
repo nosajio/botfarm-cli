@@ -31,21 +31,21 @@ const loadDueBots = async () => {
   );
   const farms = await Promise.all(openBotfiles);
   const loaders = loadersIndex(farms);
-  const dueBotsWithLoaders = dueBots.map(dueBot => {
-    const farm = farms.find(f => f.id = dueBot.farm_id);
-    const loaderPath = botPath(farm.slug, loaders[dueBot.bot_name]);
-    const loaderPathFull = botPathAbs(farm.slug, loaders[dueBot.bot_name]);
-    return Object.assign({}, dueBot, { loader: loaderPath, fullLoader: loaderPathFull });
-  });
+  const dueBotsWithLoaders = dueBots.map(dueBot => loadBot(dueBot, loaders, farms));
   return dueBotsWithLoaders;
 }
 
 /**
  * Load specified bot from userfiles dir
+ * @param {object} bot
+ * @param {object} loaders
+ * @param {array} farms
  */
-
-const loadBot = async path => {
-
+const loadBot = (bot, loaders, farms) => {
+  const farm = farms.find(f => f.id = bot.farm_id);
+  const loaderPath = botPath(farm.slug, loaders[bot.bot_name]);
+  const loaderPathFull = botPathAbs(farm.slug, loaders[bot.bot_name]);
+  return Object.assign({}, bot, { loader: loaderPath, fullLoader: loaderPathFull });
 }
 
 module.exports = { loadBot, loadDueBots, findDueBots };
