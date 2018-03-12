@@ -3,6 +3,7 @@ const error = require('debug')('botfarm:error:runner');
 const path = require('path');
 const { spawn } = require('child_process');
 const { loadDueBots } = require('./loader');
+const { outputs } = require('db');
 
 /**
  * This file contains the toolkit for taking from the queue and running bots 
@@ -19,12 +20,12 @@ const spawnBotProcess = (bot) => {
 const captureOutput = (botProcess, bot) => {
   if (botProcess.stdout) {
     botProcess.stdout.on('data', data => {
-      debug('Stdout for %s:  %s', bot.bot_name, data);
+      outputs.capture('stdout', data.toString(), bot.farm_id, bot.bot_name);
     });
   }
   if (botProcess.stderr) {
     botProcess.stderr.on('data', data => {
-      error('Stderr for %s:  %s', bot.bot_name, data);
+      outputs.capture('stderr', data.toString(), bot.farm_id, bot.bot_name);      
     });
   }
 }
@@ -39,6 +40,7 @@ const runDueBots = async () => {
       error(err);
     }
   });
+  return dueBots;
 }
  
 module.exports = { runDueBots }
