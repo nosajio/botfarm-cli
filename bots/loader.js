@@ -2,9 +2,8 @@ const debug = require('debug')('botfarm:bots:loader');
 const error = require('debug')('botfarm:error:bots:loader');
 const path = require('path');
 const { queue } = require('db');
-const { farmWithBotfile, farmPath } = require('farms');
-
-const farmsPath = process.env.FARMS;
+const { farmWithBotfile } = require('farms');
+const { botPath, botPathAbs } = require('./bot-path');
 
 const findDueBots = async () => {
   const now = new Date();
@@ -34,8 +33,9 @@ const loadDueBots = async () => {
   const loaders = loadersIndex(farms);
   const dueBotsWithLoaders = dueBots.map(dueBot => {
     const farm = farms.find(f => f.id = dueBot.farm_id);
-    const pathToFarm = farmPath(farm.slug)
-    return Object.assign({}, dueBot, { loader: `${pathToFarm}/${loaders[dueBot.bot_name]}` });
+    const loaderPath = botPath(farm.slug, loaders[dueBot.bot_name]);
+    const loaderPathFull = botPathAbs(farm.slug, loaders[dueBot.bot_name]);
+    return Object.assign({}, dueBot, { loader: loaderPath, fullLoader: loaderPathFull });
   });
   return dueBotsWithLoaders;
 }
