@@ -8,7 +8,12 @@ const { botPath, botPathAbs } = require('./bot-path');
 const findDueBots = async () => {
   const now = new Date();
   const dueBots = await queue.search({ before: now });
-  return dueBots;
+  if (! dueBots.length) {
+    return null;
+  }
+  const queuedBots = dueBots.map(q => queue.take(q.id));
+  const flatten = bots => bots.map(b => b[0]);
+  return await Promise.all(queuedBots).then(bots => flatten(bots));
 }
 
 /**
@@ -30,6 +35,9 @@ const botsIndex = farmsAndBotfiles => {
  */
 const loadDueBots = async () => {
   const dueBots = await findDueBots();
+  if (! dueBots) {
+    return null;
+  }
   const openBotfiles = dueBots.map(dueBot => 
     farmWithBotfile(dueBot.farm_id)
   );

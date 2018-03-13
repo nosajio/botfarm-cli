@@ -38,11 +38,14 @@ module.exports = db => ({
    *  @param {number} id
    *  @return {object} item
    */
-  take: async ids => {
+  take: async id => {
     try {
-      const rows = await query(db, 'SELECT FROM bot_queue WHERE id=$1', [id]);
-      // const rows = await query(db, 'DELETE FROM bot_queue WHERE id=$1 RETURNING *', [id]);
-      return rows;
+      const rows = await query(db, 'SELECT * FROM bot_queue WHERE id=$1', [id]);
+      if (rows) {
+        // The row must be removed from the queue to prevent the bot being called > 1 time
+        query(db, 'DELETE FROM bot_queue WHERE id=$1', [id]);
+        return rows;
+      }
     } catch(err) {
       throw err;
     }

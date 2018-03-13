@@ -32,6 +32,9 @@ const captureOutput = (botProcess, bot) => {
 
 const runDueBots = async () => {
   const dueBots = await loadDueBots();
+  if (! dueBots) {
+    return null;
+  }
   dueBots.forEach(b => {
     try {
       const botProcess = spawnBotProcess(b);

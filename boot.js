@@ -6,15 +6,15 @@ const db = require('db');
 const queue = require('queue');
 const { runner } = require('bots');
 
-// A simple iterative 
-const runEvery = seconds => new Promise(resolve => {
+// A simple delay 
+const wait = seconds => new Promise(resolve => {
   setTimeout(() => {
     resolve();
   }, seconds * 1000);
 });
 
 const runloop = () => {  
-  runEvery(5)
+  wait(5)
     .then(() => runner.runDueBots())
     .catch(err => error(err))
     // After running due bots, add their next runtimes to the queue
