@@ -11,10 +11,14 @@ const findDueBots = async () => {
   return dueBots;
 }
 
-const loadersIndex = farmsAndBotfiles => {
+/**
+ * Return a 1 dimensional object of bot: botfile entries and return it
+ * @param {Array<Object>} farmsAndBotfiles 
+ */
+const botsIndex = farmsAndBotfiles => {
   return farmsAndBotfiles.reduce((acc, current) => {
     Object.entries(current.botfile).forEach(([name, val]) => {
-      acc[name] = val.load;
+      acc[name] = val;
     });
     return acc;
   }, {});
@@ -30,22 +34,24 @@ const loadDueBots = async () => {
     farmWithBotfile(dueBot.farm_id)
   );
   const farms = await Promise.all(openBotfiles);
-  const loaders = loadersIndex(farms);
-  const dueBotsWithLoaders = dueBots.map(dueBot => loadBot(dueBot, loaders, farms));
+  const botfileBots = botsIndex(farms);
+  const dueBotsWithLoaders = dueBots.map(dueBot => loadBot(dueBot, botfileBots, farms));
   return dueBotsWithLoaders;
 }
 
 /**
  * Load specified bot from userfiles dir
  * @param {object} bot
- * @param {object} loaders
+ * @param {object} botfileBots
  * @param {array} farms
  */
-const loadBot = (bot, loaders, farms) => {
+const loadBot = (bot, botfileBots, farms) => {
   const farm = farms.find(f => f.id = bot.farm_id);
-  const loaderPath = botPath(farm.slug, loaders[bot.bot_name]);
-  const loaderPathFull = botPathAbs(farm.slug, loaders[bot.bot_name]);
-  return Object.assign({}, bot, { loader: loaderPath, fullLoader: loaderPathFull });
+  const botfileEntry = botfileBots[bot.bot_name];
+  const loader = botfileEntry.load;
+  const loaderPath = botPath(farm.slug, loader);
+  const loaderPathFull = botPathAbs(farm.slug, loader);
+  return Object.assign({}, bot, { loader: loaderPath, fullLoader: loaderPathFull, autorun: botfileEntry.autorun });
 }
 
 module.exports = { loadBot, loadDueBots, findDueBots };

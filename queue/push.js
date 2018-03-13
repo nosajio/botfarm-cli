@@ -7,13 +7,13 @@ const { queue } = require('db');
 /**
  * Push an item into the queue
  * @param {object} item 
- * @param {string} item.botName
+ * @param {string} item.bot_name
  * @param {Date}   item.time
- * @param {number}   item.farm_id
+ * @param {number} item.farm_id
  */
-const push = ({ botName, time, farm_id }) => 
+const push = ({ bot_name, time, farm_id }) => 
   queue.push({
-    bot_name: botName,
+    bot_name,
     time,
     farm_id
   });

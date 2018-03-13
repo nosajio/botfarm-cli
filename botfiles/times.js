@@ -126,6 +126,7 @@ const parseRunTime = autorunStr => {
     if (patterns.wildcard.test(c)) {
       parsedTimes.push( parseWildcard(c) );
     } else {
+      error('Unable to parse time: %s', c);
     }
   });
   return parsedTimes;
@@ -139,10 +140,10 @@ const parseRunTime = autorunStr => {
  */
 const nextRunTimes = bots => {
   const botsWithRunTimes = {};
-  Object.entries(bots).forEach(([botName, props]) => {
+  Object.entries(bots).forEach(([bot_name, props]) => {
     const runTimes = parseRunTime(props.autorun);
     const botWithTime = {
-      [botName]: { ...props, runTimes: runTimes.sort( datefns.compareAsc ) } 
+      [bot_name]: { ...props, runTimes: runTimes.sort( datefns.compareAsc ) } 
     }
     Object.assign(botsWithRunTimes, botWithTime);
   });

@@ -19,7 +19,7 @@ const pushMany = async (bots, farmId) => {
   const pushOps = Object
     .entries(bots)
     .map(
-      ([botName, botProps]) => push({ farm_id: farmId, botName, time: botProps.runTimes[0] })
+      ([bot_name, botProps]) => push({ farm_id: farmId, bot_name, time: botProps.runTimes[0] })
     );
   const results = await Promise.all(pushOps);
   return results;

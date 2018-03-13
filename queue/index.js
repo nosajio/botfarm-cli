@@ -3,4 +3,5 @@ module.exports = {
   push: require('./push'),
   pushMany: require('./pushMany'),
   take: require('./take'),
+  ...require('./update'),
 }
