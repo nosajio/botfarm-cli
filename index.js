@@ -25,8 +25,20 @@ const runloop = () => {
     .catch(err => error(err));
 }
 
-const boot = () => {
-  runloop();
+const start = () => {
+  // Always renew the queue on start 
+  queue.renewQueue()
+    .then(() => runloop())
+    .catch(err => error(err) && stop());
 }
 
-boot();
+const stop = () => {
+  process.exit(0);
+}
+
+//  WHen the AUTOSTART env variable is present, run the start function
+if (process.env.AUTOSTART) {
+  start();
+}
+
+module.exports = {start, stop}

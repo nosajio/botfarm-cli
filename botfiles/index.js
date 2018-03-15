@@ -1,3 +1,3 @@
 module.exports = {
-  times: require('./times'),
+  times: require('./times')
 }

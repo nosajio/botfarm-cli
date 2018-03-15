@@ -3,5 +3,6 @@ module.exports = {
   push: require('./push'),
   pushMany: require('./pushMany'),
   take: require('./take'),
-  ...require('./update'),
+  renewQueue: require('./renewQueue'),
+  updateForBots: require('./update-for-bots'),
 }

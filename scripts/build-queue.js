@@ -2,7 +2,7 @@ const path = require('path');
 require('dotenv').config();
 
 const debug = require('debug')('botfarm:scripts');
-const renewQueue = require('botfiles/renewQueue');
+const renewQueue = require('queue/renewQueue');
 
 (async () => {
   try {

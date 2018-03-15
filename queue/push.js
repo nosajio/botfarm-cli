@@ -9,13 +9,13 @@ const { queue } = require('db');
  * @param {object} item 
  * @param {string} item.bot_name
  * @param {Date}   item.time
- * @param {number} item.farm_id
+ * @param {number} item.repo_id
  */
-const push = ({ bot_name, time, farm_id }) => 
+const push = ({ bot_name, time, repo_id }) => 
   queue.push({
     bot_name,
     time,
-    farm_id
+    repo_id
   });
 
 module.exports = push

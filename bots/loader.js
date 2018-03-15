@@ -1,9 +1,34 @@
 const debug = require('debug')('botfarm:bots:loader');
 const error = require('debug')('botfarm:error:bots:loader');
 const path = require('path');
-const { queue } = require('db');
-const { farmWithBotfile } = require('farms');
+const is = require('is_js');
+const { queue, repos } = require('db');
+const { repoWithBotfile, getBotfile } = require('repos');
 const { botPath, botPathAbs } = require('./bot-path');
+
+
+/**
+ * Output a common shaped object that holds all the data needed to load and 
+ * run a bot.
+ * @param {string} repoDir Directory name containing the repo
+ * @param {number} repoId 
+ * @param {string} botName Name of the bot in the botfile
+ * @param {string} load Load entry from the botfil
+ * @param {string} autorun Autorun entry from the botfile
+ * @returns {object}
+ */
+const botShape = (repoDir, repoId, botName, load, autorun) =>  {
+  const loadPath = botPath(repoDir, load);
+  const loadPathFull = botPathAbs(repoDir, load);
+  return {
+    loader: loadPath,
+    fullLoader: loadPathFull,
+    repo_id: repoId,
+    repo_dir: repoDir,
+    bot_name: botName,
+    autorun,
+  }
+}
 
 const findDueBots = async () => {
   const now = new Date();
@@ -17,11 +42,11 @@ const findDueBots = async () => {
 }
 
 /**
- * Return a 1 dimensional object of bot: botfile entries and return it
- * @param {Array<Object>} farmsAndBotfiles 
+ * Return a 1 dimensional object of all bot: botfile entries
+ * @param {Array<Object>} reposAndBotfiles 
  */
-const botsIndex = farmsAndBotfiles => {
-  return farmsAndBotfiles.reduce((acc, current) => {
+const botsIndex = reposAndBotfiles => {
+  return reposAndBotfiles.reduce((acc, current) => {
     Object.entries(current.botfile).forEach(([name, val]) => {
       acc[name] = val;
     });
@@ -39,11 +64,11 @@ const loadDueBots = async () => {
     return null;
   }
   const openBotfiles = dueBots.map(dueBot => 
-    farmWithBotfile(dueBot.farm_id)
+    repoWithBotfile(dueBot.repo_id)
   );
-  const farms = await Promise.all(openBotfiles);
-  const botfileBots = botsIndex(farms);
-  const dueBotsWithLoaders = dueBots.map(dueBot => loadBot(dueBot, botfileBots, farms));
+  const repos = await Promise.all(openBotfiles);
+  const botfileBots = botsIndex(repos);
+  const dueBotsWithLoaders = dueBots.map(dueBot => prepareDueBot(dueBot, botfileBots, repos));
   return dueBotsWithLoaders;
 }
 
@@ -51,15 +76,40 @@ const loadDueBots = async () => {
  * Load specified bot from userfiles dir
  * @param {object} bot
  * @param {object} botfileBots
- * @param {array} farms
+ * @param {array} repos
  */
-const loadBot = (bot, botfileBots, farms) => {
-  const farm = farms.find(f => f.id = bot.farm_id);
+const prepareDueBot = (bot, botfileBots, repos) => {
+  const repo = repos.find(f => f.id = bot.repo_id);
   const botfileEntry = botfileBots[bot.bot_name];
   const loader = botfileEntry.load;
-  const loaderPath = botPath(farm.slug, loader);
-  const loaderPathFull = botPathAbs(farm.slug, loader);
-  return Object.assign({}, bot, { loader: loaderPath, fullLoader: loaderPathFull, autorun: botfileEntry.autorun });
+  const preparedBot = botShape(repo.dir, repo.id, bot.bot_name, loader, botfileEntry.autorun);
+  return preparedBot;
 }
+
+
+/**
+ * Find the repo and containing botfile, then if <botName> exists, return the 
+ * botfile entry for the bot.
+ * @param {string} repoName 
+ * @param {string} botName 
+ * @return {object} botfileEntry
+ */
+const loadBot = async (repoName, botName) => {
+  const repo = await repos.getByDir(repoName);
+  if (is.not.object(repo)) {
+    return Promise.reject('Repository doesn\'t exist.');
+  }
+  const botfile = await getBotfile(repoName);
+  if (is.empty(botfile)) {
+    return Promise.reject('Bot cannot be found in that repo.');
+  }
+  const bot = botfile()[botName];
+  if (! bot) {
+    return Promise.reject(`That bot cannot be found in the botfile in repo ${repoName}.`);
+  }
+  const botObject = botShape(repoName, repo.id, botName, bot.load, bot.autorun);
+  return botObject;
+}
+
 
 module.exports = { loadBot, loadDueBots, findDueBots };

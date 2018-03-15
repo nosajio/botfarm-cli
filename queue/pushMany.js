@@ -13,13 +13,13 @@ const push = require('./push');
  * @param {array} bots.[botname].runTimes
  * @param {string}  bots.[botname].autorun
  */
-const pushMany = async (bots, farmId) => {
+const pushMany = async (bots, repoId) => {
   if (is.not.object(bots)) throw new TypeError('bots arg is not an Object');
-  if (is.not.number(farmId)) throw new TypeError('pushMany expects farmId to be number');
+  if (is.not.number(repoId)) throw new TypeError('pushMany expects repoId to be number');
   const pushOps = Object
     .entries(bots)
     .map(
-      ([bot_name, botProps]) => push({ farm_id: farmId, bot_name, time: botProps.runTimes[0] })
+      ([bot_name, botProps]) => push({ repo_id: repoId, bot_name, time: botProps.runTimes[0] })
     );
   const results = await Promise.all(pushOps);
   return results;
