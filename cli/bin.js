@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
-require('dotenv').config();
+const debug = require('debug')('botfarm:cli:bin');
 const path = require('path');
 const { spawn } = require('child_process');
+
+// Load environment vars from the .env file located in the parent directory
+require('dotenv').config({ path: path.resolve(__dirname, '..') });
 
 const processConfig = {
   cwd: __dirname,
