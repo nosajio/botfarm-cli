@@ -1,6 +1,9 @@
+const path = require('path');
 const { exec } = require('child_process');
 
-exec('sh ./init.sh', { cwd: __dirname }, (err, stdout, stderr) => {
+const initSh = path.resolve(__dirname, 'init.sh');
+
+exec(`sh ${initSh}`, { cwd: path.resolve(__dirname, '..') }, (err, stdout, stderr) => {
   if (err) {
     console.error(err);
     return;
