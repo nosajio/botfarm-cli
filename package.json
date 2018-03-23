@@ -1,6 +1,6 @@
 {
   "name": "botfarm-cli",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "description": "Farming but with robots",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/nosaj/botfarm/issues"
+  },
+  "bin": {
+    "bots": "./cli/bin.js"
   },
   "homepage": "https://gitlab.com/nosaj/botfarm#README",
   "dependencies": {
