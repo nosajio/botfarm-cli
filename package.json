@@ -1,5 +1,5 @@
 {
-  "name": "botfarm",
+  "name": "botfarm-cli",
   "version": "1.0.0",
   "description": "Farming but with robots",
   "main": "index.js",
