@@ -9,7 +9,7 @@
     "build_queue": "NODE_PATH=. node ./scripts/build-queue.js",
     "init": "sh scripts/init.sh",
     "seed": "NODE_PATH=. node ./scripts/seed_db",
-    "postinstall": "NODE_PATH=. ./scripts/post-install.js"
+    "postinstall": "NODE_PATH=. node ./scripts/post-install.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-USERDATA=".userdata";
+DIR="$(pwd)/..";
+
+USERDATA="$DIR/.userdata";
 LOGS="$USERDATA/.logs";
 REPOS="$USERDATA/.repos";
 
