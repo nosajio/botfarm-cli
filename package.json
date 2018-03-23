@@ -21,7 +21,7 @@
     "url": "https://gitlab.com/nosaj/botfarm/issues"
   },
   "bin": {
-    "bots": "NODE_PATH=. DEBUG=botfarm:error:* ./cli/bin.js"
+    "bots": "./cli/bin.js"
   },
   "homepage": "https://gitlab.com/nosaj/botfarm#README",
   "dependencies": {
