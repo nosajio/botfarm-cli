@@ -21,7 +21,7 @@
     "url": "https://gitlab.com/nosaj/botfarm/issues"
   },
   "bin": {
-    "bots": "./cli/bin.js"
+    "bots": "./cli/bin.sh"
   },
   "homepage": "https://gitlab.com/nosaj/botfarm#README",
   "dependencies": {
