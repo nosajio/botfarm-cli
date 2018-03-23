@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const error = require('debug')('botfarm:error');
 const debug = require('debug')('botfarm:boot');
+const is = require('is_js');
 const db = require('db');
 const queue = require('queue');
 const { runner } = require('bots');
@@ -18,7 +19,7 @@ const runloop = () => {
     .then(() => runner.runDueBots())
     .catch(err => error(err))
     // After running due bots, add their next runtimes to the queue
-    .then(dueBots => queue.updateForBots(dueBots))
+    .then(dueBots => is.not.empty(dueBots) && queue.updateForBots(dueBots))
     .catch(err => error(err))
     // Finally, re-start the runloop 
     .then(() => runloop())

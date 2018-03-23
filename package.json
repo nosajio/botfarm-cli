@@ -8,7 +8,8 @@
     "dev": "NODE_PATH=. nodemon boot.js --ignore .userdata/ --ignore scripts/",
     "build_queue": "NODE_PATH=. node ./scripts/build-queue.js",
     "init": "sh scripts/init.sh",
-    "seed": "NODE_PATH=. node ./scripts/seed_db"
+    "seed": "NODE_PATH=. node ./scripts/seed_db",
+    "postinstall": "NODE_PATH=. ./scripts/post-install.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,7 @@
     "url": "https://gitlab.com/nosaj/botfarm/issues"
   },
   "bin": {
-    "bots": "./cli/bin.js"
+    "bots": "NODE_PATH=. DEBUG=botfarm:error:* ./cli/bin.js"
   },
   "homepage": "https://gitlab.com/nosaj/botfarm#README",
   "dependencies": {
