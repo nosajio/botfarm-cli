@@ -19,7 +19,7 @@ function repoActions(cmd, locations) {
       msg = ora('Adding repository').start();
       debug(url, dir);
       addRepo(url, dir)
-        .then(() => msg.succeed(`Repository "${dir}" has been added`), reason => console.log(reason))
+        .then(() => msg.succeed(`Repository "${dir}" has been added`), reason => error(reason))
         .catch(err => error(err));
       break;
 

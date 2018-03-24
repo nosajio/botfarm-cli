@@ -26,5 +26,5 @@ const cliProcess = spawn(
 );
 
 // Capture all the stdio and send to the current terminal
-cliProcess.stdout.on('data', d => console.log(d.toString()));
-cliProcess.stderr.on('data', d => console.error(d.toString()));
+cliProcess.stdout.on('data', d => process.stdout.write(d.toString()));
+cliProcess.stderr.on('data', d => process.stderr.write(d.toString()));
