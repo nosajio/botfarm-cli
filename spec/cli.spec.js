@@ -36,7 +36,10 @@ test('CLI commands', t => {
 
   t.test('run', tt => {
     tt.plan(1);
-    cliCmd('run', `${testRepoName}/helloworld`).then(([stdout, stderr]) => tt.false(stderr, '"run" did not error'));    
+    cliCmd('run', `${testRepoName}/hi`).then(([stdout, stderr]) => {
+      tt.false(stderr, '"run" did not error');
+      // tt.equal(stdout, 'Hello hello', 'returns correct output');
+    });
   });
 
 

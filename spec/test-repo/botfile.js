@@ -1,5 +1,5 @@
 module.exports = () => ({
-  'helloworld': {
+  'hi': {
     load: './hello.js',
     autorun: '30 seconds',
   }
