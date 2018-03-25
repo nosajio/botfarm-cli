@@ -13,27 +13,29 @@ const repoPath = dir => path.resolve(process.mainModule.filename, '../..', repos
  * Remove repo dir and the database reference
  * @param {string} dirName
  */
-async function removeRepo(dirName) {
-  if (is.not.string(dirName)) {
-    throw new TypeError('dirName is expected to be a string');
-  }
-  const repo = await getByDir(dirName);
-  if (!repo) {
-    return Promise.reject('Hmm. That repo doesn\'t exist. Run "bots repos list" to check if the directory name is correct.');
-  }
-  const absPath = repoPath(dirName);
-  // Careful now
-  exec(`rm -r ${absPath}`, (err, stdout, stderr) => {
-    if (err) {
-      throw err;
+function removeRepo(dirName) {
+  return new Promise(resolve => {
+    if (is.not.string(dirName)) {
+      throw new TypeError('dirName is expected to be a string');
     }
-    if (stderr) {
-      throw new Error(stderr);
-    }
-    // If the dir is removed, delete the reference in the db
-    deleteByDir(dirName);
+    getByDir(dirName).then(repo => {
+      if (! repo) {
+        return Promise.reject('Hmm. That repo doesn\'t exist. Run "bots repos list" to check if the directory name is correct.');
+      }
+      const absPath = repoPath(dirName);
+      // Careful now
+      exec(`rm -r ${absPath}`, (err, stdout, stderr) => {
+        if (err) {
+          throw err;
+        }
+        if (stderr) {
+          throw new Error(stderr);
+        }
+        // If the dir is removed, delete the reference in the db
+        deleteByDir(dirName).then(() => resolve(repo));
+      });
+    });
   });
-  return repo;
 }
 
 module.exports = removeRepo;

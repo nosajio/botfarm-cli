@@ -82,8 +82,9 @@ function repoCommands() {
 }
 
 /**
- * Commands for manually running bots
- * $ bot run repo/bot{.js?}
+ * Commands for manually running bots. Where "bot" is the name of the bot to be
+ * run as found in the repo's botfile.
+ * $ bot run repo/bot
  */
 function runCommands() {
   app

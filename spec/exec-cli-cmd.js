@@ -3,6 +3,8 @@ const { exec } = require('child_process');
 const is = require('is_js');
 
 const binFile = path.resolve(__dirname, '..', 'cli', 'bin.js');
+
+// Only make the app return errors when running tests
 const envStr = 'DEBUG=botfarm:error:*';
 
 /**

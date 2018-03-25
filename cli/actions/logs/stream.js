@@ -1,6 +1,7 @@
 const debug = require('debug')('botfarm:cli:streamLogs');
 const error = require('debug')('botfarm:error:cli:streamLogs');
 const { Readable } = require('stream');
+const is = require('is_js');
 const db = require('db');
 const { formatLogEntry } = require('./fmt');
 
@@ -47,7 +48,13 @@ async function streamLogs(botName, opts) {
     // Before the stream can begin, the app needs to know the last id in the table
     // so that it can easily query for new ids
     const seedResult = await db.outputs.all(1);
-    streamMarker = seedResult[0].id;
+    // In the eventuality that there are no logs in the db to start with, 
+    // just start looking from id 0
+    if (is.object(seedResult)) {
+      streamMarker = seedResult[0].id;
+    } else {
+      streamMarker = 0;
+    }
   }
   streamMarker = await streamGtId(streamMarker, process.stdout);
   // Wait then run this func again to give the illusion of live output... cheeky

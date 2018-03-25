@@ -10,7 +10,8 @@ function serviceActions(cmd, opts) {
       daemon.start();
       process.exit();
     } catch (err) {
-      console.log(err);
+      console.log('Botfarm encountered an error and couldn\'t start');
+      error(err);
     }
   } else
   if (cmd === 'stop') {
@@ -19,7 +20,7 @@ function serviceActions(cmd, opts) {
       console.log('🛑  Botfarm daemon has stopped');
       process.exit();
     } catch (err) {
-      console.log('Botfarm daemon isn\'t running or has encountered an error');
+      console.log('Botfarm daemon isn\'t running.');
       error(err);
     }
   } else
@@ -29,7 +30,7 @@ function serviceActions(cmd, opts) {
       console.log(status);
       process.exit();
     } catch (err) {
-      console.log('Botfarm daemon isn\'t running or has encountered an error');
+      console.log('Botfarm has encountered an error.');
       error(err);
     }
   }

@@ -32,9 +32,11 @@ function startDaemon() {
   resetLogs();
   const stdout = fs.openSync(logPaths.stdout, 'a');
   const stderr = fs.openSync(logPaths.stderr, 'a');
+  debug(startScriptPath)
   const backgroundProcess = spawn(process.execPath, [startScriptPath], {
     stdio: ['ipc', stdout, stderr],
-    detached: true
+    detached: true,
+    env: process.env
   });
   backgroundProcess.unref();
   const { pid } = backgroundProcess;
@@ -43,7 +45,7 @@ function startDaemon() {
 
 /**
  * Stop the child process by retrieving the pid from disk and killing 
- * the process. Returns false if no process is running.
+ * the process. Throws if no process is running.
  */
 function stopDaemon() {
   const pid = getPid();
@@ -53,7 +55,7 @@ function stopDaemon() {
     try {
       process.kill(parseInt(pid));
     } catch(err) {
-      error(err);
+      throw err;
     }
   } else {
     throw new Error('Couldn\'t stop daemon as it isn\'t running (no pid)');
