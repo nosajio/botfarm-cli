@@ -4,7 +4,8 @@ const is = require('is_js');
 const path = require('path');
 const { exec } = require('child_process');
 
-const reposPath = process.env.FARMS;
+const reposPath = process.env.REPOS;
+
 const repoPath = dir => path.resolve(process.mainModule.filename, '../..', reposPath, dir);
 
 /**

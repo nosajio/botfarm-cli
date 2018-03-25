@@ -20,6 +20,7 @@ test('CLI commands', t => {
   t.test('repos', tt => {
     tt.plan(2);
     const testRepo = path.join(__dirname, 'test-repo');
+    // Give the repo a random name to avoid conflicting with user added repos
     const testRepoName = String(Math.floor(100000000 + Math.random() * 900000000));
     cliCmd('repos', ['add', testRepo, testRepoName]).then(([stdout, stderr]) => {
       tt.false(stderr, '"add" did not error')
