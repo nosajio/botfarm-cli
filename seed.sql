@@ -4,7 +4,7 @@ CREATE TABLE bot_outputs (
     output text,
     repo_id integer,
     bot_name VARCHAR(255),
-    "time" timestamp with time zone,    
+    "time" timestamp with time zone
 );
 
 
