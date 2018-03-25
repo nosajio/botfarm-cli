@@ -7,6 +7,7 @@ test('CLI commands', t => {
     tt.plan(3);
     cliCmd('service', 'start').then(([stdout, stderr]) => {
       tt.false(stderr, '"start" did not error')
+      // Nest status and stop commands inside of start cb to avoid race conditions
       cliCmd('service', 'status').then(([stdout, stderr]) => tt.false(stderr, '"status" did not error'));
       cliCmd('service', 'stop').then(([stdout, stderr]) => tt.false(stderr, '"stop" did not error'));
     });
@@ -24,6 +25,7 @@ test('CLI commands', t => {
     const testRepoName = String(Math.floor(100000000 + Math.random() * 900000000));
     cliCmd('repos', ['add', testRepo, testRepoName]).then(([stdout, stderr]) => {
       tt.false(stderr, '"add" did not error')
+      // Nest remove in add to avoid race conditions
       cliCmd('repos', ['remove', testRepoName]).then(([stdout, stderr]) => tt.false(stderr, '"remove" did not error'));
     });
   });
