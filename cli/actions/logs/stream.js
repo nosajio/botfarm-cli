@@ -50,7 +50,7 @@ async function streamLogs(botName, opts) {
     const seedResult = await db.outputs.all(1);
     // In the eventuality that there are no logs in the db to start with, 
     // just start looking from id 0
-    if (is.object(seedResult)) {
+    if (! is.empty(seedResult)) {
       streamMarker = seedResult[0].id;
     } else {
       streamMarker = 0;
