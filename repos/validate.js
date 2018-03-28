@@ -1,6 +1,7 @@
 const debug = require('debug')('botfile:repos:validate')
 const error = require('debug')('botfile:error:repos:validate')
 const path = require('path')
+const paths = require('paths')
 const fs = require('fs');
 
 /**
@@ -8,9 +9,8 @@ const fs = require('fs');
  * valid to be added.
  */
 function validateRepo(repoName) {
-  const reposDir = process.env.REPOS;
-  const repoPath = path.resolve(__dirname, '..', reposDir);
-  const repoFiles = fs.readdirSync(repoPath);
+  const reposDir = paths.repos;
+  const repoFiles = fs.readdirSync(reposDir);
   const hasBotfile = checkBotfile(repoFiles);
   return { valid: hasBotfile, reason: ! hasBotfile ? 'No botfile present' : '' };
 }

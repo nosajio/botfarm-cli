@@ -1,8 +1,9 @@
 const debug = require('debug')('botfarm:db');
 const path = require('path');
 const { Database } = require('sqlite3');
+const paths = require('paths');
 
-const dbFileLocation = path.resolve(__dirname, '../.userdata/store.sqlite');
+const dbFileLocation = path.join(paths.userdata, 'store.sqlite');
 
 // The instance of the database will be assigned to the db variable
 const db = new Database(dbFileLocation, err => {

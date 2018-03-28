@@ -4,19 +4,19 @@ const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const is = require('is_js');
+const paths = require('paths');
 
 // Setup all the paths
 const rootPath = path.resolve(__dirname, '..');
 // Relative to NODE_PATH env variable (should be set to app root)
 const startScriptPath = path.join(rootPath, 'cli', 'start-process.js');
 // Logs dirs
-const logsRootPath = path.join(rootPath, process.env.LOGS);
 const logPaths = {
-  stdout: path.join(logsRootPath, 'botfarm_stdout.log'),
-  stderr: path.join(logsRootPath, 'botfarm_stderr.log'),  
+  stdout: path.join(paths.logs, 'botfarm_stdout.log'),
+  stderr: path.join(paths.logs, 'botfarm_stderr.log'),  
 }
 // Where to store the PID
-const pidPath = path.join(rootPath, process.env.USERDATA, 'pid');
+const pidPath = path.join(paths.userdata, 'pid');
 
 
 /**
@@ -68,7 +68,9 @@ function stopDaemon() {
  */
 function resetLogs() {
   Object.entries(logPaths).forEach(([type, path]) => {
-    fs.unlinkSync(path);
+    if (fs.existsSync(path)) {
+      fs.truncateSync(path, 0);
+    }
   });
 }
 

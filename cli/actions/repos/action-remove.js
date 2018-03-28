@@ -5,10 +5,6 @@ const path = require('path');
 const is = require('is_js');
 const { repos: { getByDir, deleteByDir } } = require('db');
 
-const reposPath = process.env.REPOS;
-
-const repoPath = dir => path.resolve(process.mainModule.filename, '../..', reposPath, dir);
-
 /**
  * Remove repo dir and the database reference
  * @param {string} dirName

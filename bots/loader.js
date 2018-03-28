@@ -4,7 +4,7 @@ const path = require('path');
 const is = require('is_js');
 const { queue, repos } = require('db');
 const { repoWithBotfile, getBotfile } = require('repos');
-const { botPath, botPathAbs } = require('./bot-path');
+const { botPath } = require('./bot-path');
 
 
 /**
@@ -19,10 +19,8 @@ const { botPath, botPathAbs } = require('./bot-path');
  */
 const botShape = (repoDir, repoId, botName, load, autorun) =>  {
   const loadPath = botPath(repoDir, load);
-  const loadPathFull = botPathAbs(repoDir, load);
   return {
     loader: loadPath,
-    fullLoader: loadPathFull,
     repo_id: repoId,
     repo_dir: repoDir,
     bot_name: botName,

@@ -5,8 +5,6 @@ const path = require('path');
 const { reposWithBotfiles } = require('repos');
 const gitCmd = require('./git-cmd');
 
-const reposPath = process.env.REPOS;
-const repoPath = dir => path.resolve(process.mainModule.filename, '../..', reposPath, dir);
 
 /**
  * Update all the repositories

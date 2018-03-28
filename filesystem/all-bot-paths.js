@@ -2,9 +2,9 @@ const debug = require('debug')('botfarm:bots:fs');
 const error = require('debug')('botfarm:error:bots:fs');
 const fs = require('fs');
 const path = require('path');
+const paths = require('paths');
 
-const { REPOS } = process.env;
-const reposPath = path.resolve(`${__dirname}/../${REPOS}`);
+const reposPath = paths.repos;
 
 /**! 
  *  Return all bot paths in .userdata as an object 

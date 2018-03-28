@@ -2,11 +2,11 @@ const debug = require('debug')('botfarm:cli:gitCmd');
 const error = require('debug')('botfarm:error:cli:gitCmd');
 const is = require('is_js');
 const path = require('path');
+const paths = require('paths');
 const { exec } = require('child_process');
+const { repoPath } = require('repos');
 
-const reposPath = process.env.REPOS;
-
-const repoPath = dir => path.resolve(process.mainModule.filename, '../..', reposPath, dir);
+const reposPath = paths.repos;
 
 /**
  * Run a git command from inside of a bot repository. Pretty much all of the git

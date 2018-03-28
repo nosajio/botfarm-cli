@@ -4,7 +4,7 @@ const is = require('is_js');
  * This file contains the toolkit for taking from the queue and running bots 
  */
 
-const { BOT } = process.env; 
+const { BOT } = process.env;
 
 const spawnBotProcess = bot => {
   let botPayload;
