@@ -11,7 +11,7 @@ const { reposWithBotfiles } = require('repos');
 async function listRepos() {
   const repos = await reposWithBotfiles();
   if (is.empty(repos)) {
-    return Promise.reject('No repositories available. Add one with "bot repos add http://url.to.repo local-name"');
+    return Promise.reject('No repositories available. Add one with "bots repos add http://url.to.repo local-name"');
   }
   // Use a table to display the repos
   const out = new Table({

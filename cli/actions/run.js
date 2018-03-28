@@ -11,7 +11,7 @@ function runActions(pathName) {
   const msg = ora(`Running bot ${botName} in ${repoName}`);
   runner.loadAndRunBot(repoName, botName)
     .then(() => { 
-      msg.succeed(`Bot has run successfully. Run "bot logs --bot ${botName}" to see the output.`); 
+      msg.succeed(`Bot has run successfully. Run "bots logs --bot ${botName}" to see the output.`); 
     })
     .catch(err => {
       msg.fail(`Bot cannot be run. Are you sure it's in the ${repoName} repo?`);

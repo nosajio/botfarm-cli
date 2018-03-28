@@ -9,7 +9,7 @@ const envStr = 'DEBUG=botfarm:error:*';
 
 /**
  * Wrapper for testing of the the command line interface
- * @param {string} cmd the root command to be ran after "bot", like "service", "queue" etc
+ * @param {string} cmd the root command to be ran after "bots", like "service", "queue" etc
  * @param {string | string[]} args the args after the cmd. "start", "show", you get it
  */
 function cliCmd(cmd, args='') {
