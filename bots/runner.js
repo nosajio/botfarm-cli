@@ -46,8 +46,9 @@ const loadAndRunBot = async (repoName, botName) => {
     if (is.not.object(loadedBot)) {
       throw new Error('Bot doesn\'t exist.');
     }
+    const timeBeforeStart = Date.now(); // Time in milliseconds before the bot process is started
     const botProcess = spawnBotProcess(loadedBot);
-    captureOutputStream(botProcess, loadedBot);
+    captureOutputStream(botProcess, loadedBot, timeBeforeStart);
   } catch(err) {
     throw err;
   }

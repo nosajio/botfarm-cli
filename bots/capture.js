@@ -3,27 +3,27 @@ const error = require('debug')('botfarm:error:capture');
 const path = require('path');
 const { outputs } = require('db');
 
-const capture = (output, repo_id, bot_name) => {
-  outputs.capture('stdout', output, repo_id, bot_name);
+const capture = (output, repo_id, bot_name, startTime) => {
+  outputs.capture('stdout', output, repo_id, bot_name, startTime);
 }
 
-const captureError = (error, repo_id, bot_name) => {
-  outputs.capture('stderr', error, repo_id, bot_name);
+const captureError = (error, repo_id, bot_name, startTime) => {
+  outputs.capture('stderr', error, repo_id, bot_name, startTime);
 }
 
-const captureOutputStream = (botProcess, bot) => {
+const captureOutputStream = (botProcess, bot, startTime) => {
   if (botProcess.stdout) {
     botProcess
       .stdout
       .on('data', data => 
-        capture(data.toString(), bot.repo_id, bot.bot_name)
+        capture(data.toString(), bot.repo_id, bot.bot_name, startTime)
       );
   }
   if (botProcess.stderr) {
     botProcess
       .stderr
       .on('data', data => 
-        captureError(data.toString(), bot.repo_id, bot.bot_name)
+        captureError(data.toString(), bot.repo_id, bot.bot_name, startTime)
       );
   }
 }
