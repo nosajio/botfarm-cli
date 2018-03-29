@@ -4,6 +4,7 @@ CREATE TABLE bot_outputs (
     output text,
     repo_id integer,
     bot_name VARCHAR(255),
+    runtime_ms integer,
     "time" timestamp with time zone
 );
 
@@ -23,6 +24,3 @@ CREATE TABLE repos (
     dir text,
     repository text
 );
-
--- Default data
--- INSERT INTO repos (uuid, name, dir, repository) VALUES ("08d34485-bb5b-4c09-8253-54b87d090514", "testbots", "botrepo-test-bots", "https://gitlab.com/nosaj/botrepo-test-bots");
