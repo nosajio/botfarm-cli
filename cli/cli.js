@@ -10,6 +10,7 @@ const logsActions = require('./actions/logs');
 const queueActions = require('./actions/queue');
 const repoActions = require('./actions/repos');
 const runActions = require('./actions/run');
+const consoleActions = require('./actions/console');
 
 const app = commander.version(version);
 
@@ -29,6 +30,8 @@ function registerCommands() {
   repoCommands();
   // $ bot run reponame/botname{.js?}
   runCommands();
+  // $ bots console
+  consoleCommands();
   // Parse the argv list for registered commands
   app.parse(process.argv);
 }
@@ -92,4 +95,11 @@ function runCommands() {
     .description('Run a bot manually')
     .option('-f --fork', 'Don\'t re-queue bot after running.')
     .action(runActions);
+}
+
+function consoleCommands() {
+  app
+    .command('console')
+    .description('Show the console')
+    .action(consoleActions);
 }
