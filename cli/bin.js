@@ -11,6 +11,8 @@ debug(path.resolve(__dirname, '..') );
 
 const processConfig = {
   cwd: __dirname,
+  // Capture all the stdio and send to the current terminal
+  stdio: [process.stdin, process.stdout, process.stderr],
   env: {
     ...process.env,
     NODE_PATH: path.resolve(__dirname, '..'),
@@ -24,7 +26,3 @@ const cliProcess = spawn(
   ['./cli.js', ...process.argv.slice(2)], 
   processConfig
 );
-
-// Capture all the stdio and send to the current terminal
-cliProcess.stdout.on('data', d => process.stdout.write(d.toString()));
-cliProcess.stderr.on('data', d => process.stderr.write(d.toString()));
