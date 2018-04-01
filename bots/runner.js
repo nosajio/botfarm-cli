@@ -26,8 +26,9 @@ const runDueBots = async () => {
   }
   dueBots.forEach(b => {
     try {
+      const timeBeforeStart = Date.now(); // Time in milliseconds before the bot process is started      
       const botProcess = spawnBotProcess(b);
-      captureOutputStream(botProcess, b);
+      captureOutputStream(botProcess, b, timeBeforeStart);
     } catch(err) {
       error(err);
     }
@@ -53,5 +54,5 @@ const loadAndRunBot = async (repoName, botName) => {
     throw err;
   }
 }
- 
+
 module.exports = { runDueBots, loadAndRunBot }
