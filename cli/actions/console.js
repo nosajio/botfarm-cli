@@ -19,22 +19,41 @@ function setupConsoleUi() {
 
   const history = genHistoryBox();
   const queue = genQueueBox();
+  const logs = genLogsBox();
 
   // // Add the ui components to the main screen component
-  screen.append(history);
   screen.append(queue);
+  screen.append(history);
+  screen.append(logs);
 
   // Call render() on the master screen component to draw it on the screen
   screen.render();
 }
 
+function genQueueBox() {
+  const queueBox = blessed.box({
+    left: 0,
+    top: 0,
+    label: 'Queue',
+    width: '30%',
+    height: '70%',
+    border: {
+      type: 'line',
+    },
+    style: {
+      fg: 'white',
+    }
+  });
+  return queueBox;
+}
+
 function genHistoryBox() {
   const historyBox = blessed.box({
-    left: 10,
-    bottom: 10,
-    content: 'History',
-    width: '33%',
-    height: '25%',
+    left: 0,
+    top: '70%+1',
+    label: 'History',
+    width: '30%',
+    height: '30%',
     border: {
       type: 'line',
     },
@@ -45,19 +64,19 @@ function genHistoryBox() {
   return historyBox;
 }
 
-function genQueueBox() {
-  const queueBox = blessed.box({
-    left: 10,
-    top: 'center',
-    content: 'Queue',
-    width: '33%',
-    height: '25%',
+function genLogsBox() {
+  const logsBox = blessed.box({
+    left: '30%',
+    top: 0,
+    label: 'Logs',
+    width: '70%',
+    height: '100%',
     border: {
-      type: 'line',
+      type: 'line'
     },
     style: {
       fg: 'white',
     }
   });
-  return queueBox;
+  return logsBox;
 }
