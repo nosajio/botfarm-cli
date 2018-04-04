@@ -1,8 +1,8 @@
-const botfarm = require('../');
+const startService = require('service/start');
 
 const start = () => {
   try {
-    botfarm.start();  
+    startService();  
   } catch(err) {
     throw err;
   }
