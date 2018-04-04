@@ -48,7 +48,7 @@ async function streamLogs(botName, opts, streamOut = process.stdout) {
     const initialLogsCount = 10;
 
     // Connect read and write streams
-    readStream.pipe(streamOut);  
+    readStream.pipe(streamOut);
 
     // Before the stream can begin, the app needs to know the last id in the table
     // so that it can easily query for new ids
