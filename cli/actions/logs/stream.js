@@ -37,26 +37,35 @@ async function streamGtId(id_gt, writeStream) {
     const logString = formatLogEntry(log);
     readStream.push(logString);
   });
-  readStream.pipe(writeStream);
   // Return the last id
   return rows[rows.length - 1].id;
 }
 
 
-async function streamLogs(botName, opts) {
-  if (!streamMarker) {
+async function streamLogs(botName, opts, streamOut = process.stdout) {
+  if (! streamMarker) {
+    // How many logs to return initially
+    const initialLogsCount = 10;
+
+    // Connect read and write streams
+    readStream.pipe(streamOut);  
+
     // Before the stream can begin, the app needs to know the last id in the table
     // so that it can easily query for new ids
-    const seedResult = await db.outputs.all(1);
-    // In the eventuality that there are no logs in the db to start with, 
+    const seedResult = await db.outputs.all(initialLogsCount);
+    
+    // In the event that there are no logs in the db to start with, 
     // just start looking from id 0
     if (! is.empty(seedResult)) {
-      streamMarker = seedResult[0].id;
+      // Pipe the seed logs to the output
+      seedResult.forEach(r => readStream.push(formatLogEntry(r)));
+      // Use the last log's id as a marker to search from
+      streamMarker = seedResult[seedResult.length - 1].id;
     } else {
       streamMarker = 0;
     }
   }
-  streamMarker = await streamGtId(streamMarker, process.stdout);
+  streamMarker = await streamGtId(streamMarker, streamOut);
   // Wait then run this func again to give the illusion of live output... cheeky
   await poll(1000);
   streamLogs(botName, opts);
