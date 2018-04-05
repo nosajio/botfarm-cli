@@ -18,8 +18,8 @@ const queueRow = (index, repoName, botName, time) => {
   const rowLeft = blessed.box({ left: 0, tags: true });
   rowLeft.setContent(`${repoName}/{bold}${botName}{/bold}`);
   const rowRight = blessed.box({ left: '50%', tags: true });
-  const timeUntil = dueInString( new Date(time) );
-  rowRight.setContent(`{right}${timeUntil.replace('about ', '')}{/right}`)
+  const timeUntil = dueInString(new Date(time), true);
+  rowRight.setContent(`{right}${timeUntil}{/right}`)
   // Add boxes to the row
   queueRow.append(rowLeft);
   queueRow.append(rowRight);

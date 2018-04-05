@@ -1,10 +1,17 @@
 const debug = require('debug')('botfarm:helpers:times');
 const datefns = require('date-fns');
 
-function dueInString(timestamp) {
+function dueInString(timestamp, shorten = false) {
   const dueDate = new Date(timestamp);
   const now = new Date();
-  const distance = datefns.distanceInWords(dueDate, now);
+  let distance = datefns.distanceInWords(dueDate, now);
+  if (shorten) {
+    distance = distance.replace('about ', '');
+    distance = distance.replace('less than a', '< 1');
+    distance = distance.replace('minute', 'min');
+    distance = distance.replace('hour', 'hr');
+    distance = distance.replace('second', 'sec');
+  }
   return now > dueDate ? `${distance} ago` : distance;
 }
 
