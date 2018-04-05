@@ -46,8 +46,8 @@ const queueTable = async queueItems => {
  */
 function updateEvery(seconds, queueBox) {
   setTimeout(() => {
-    // Start by removing all the children
-    queueBox.children = [];
+    // Start by removing the table from the queue box
+    queueBox.children.pop();
     // Refetch the data
     queueTable().then(tableBox => {
       renderTableBox(queueBox, tableBox);
