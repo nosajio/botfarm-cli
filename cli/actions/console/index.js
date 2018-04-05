@@ -1,5 +1,5 @@
-const debug = require('debug')('botfarm:cli:queueActions');
-const error = require('debug')('botfarm:error:cli:queueActions');
+const debug = require('debug')('botfarm:cli:console');
+const error = require('debug')('botfarm:error:cli:console');
 const blessed = require('blessed');
 
 const genHistoryBox = require('./components/history');

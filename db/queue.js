@@ -1,9 +1,30 @@
 const debug = require('debug')('botfarm:db:queue');
+const error = require('debug')('botfarm:error:db:queue');
 const query = require('./query');
 const datefns = require('date-fns');
 
 module.exports = db => ({
 
+  /**
+   * Return the queue with repo references inlined
+   */
+  getWithRefs: async () => {
+    try {
+      const queueRows = await query(db, 'SELECT * FROM bot_queue ORDER BY time ASC', []);
+      const repoQueries = queueRows.map(q => 
+        query(db, 'SELECT * FROM repos WHERE id = $1', [q.repo_id])
+      );
+      const reposIndex = (await Promise.all(repoQueries)).reduce((index, [curr]) => (
+        { ...index, [curr.id]: curr }
+      ), {});
+      const queueWithRepos = queueRows.map(q => ({ ...q, repo: reposIndex[q.repo_id]}));
+      return queueWithRepos;
+    } catch(err) {
+      error(err);
+      return null;
+    }
+  },
+  
   get: async () => {
     try {
       const rows = await query(db, 'SELECT * FROM bot_queue ORDER BY time ASC', []);
