@@ -57,13 +57,13 @@ function updateEvery(seconds, queueBox) {
 }
 
 
-function genQueueBox() {
+function genQueueBox(top = 0, left = 0, width = '30%', height = '70%') {
   const queueBox = blessed.box({
-    left: 0,
-    top: 0,
+    left,
+    top,
+    width,
+    height,
     label: 'Queue',
-    width: '30%',
-    height: '70%',
     border: {
       type: 'line',
     },

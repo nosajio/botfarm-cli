@@ -1,12 +1,11 @@
 const blessed = require('blessed');
 
-function genHistoryBox() {
+function genHistoryBox(top = '70%', left = 0, width = '30%') {
   const historyBox = blessed.box({
-    left: 0,
-    top: '70%+1',
+    top, 
+    left,
+    width,
     label: 'History',
-    width: '30%',
-    height: '30%',
     border: {
       type: 'line',
     },
