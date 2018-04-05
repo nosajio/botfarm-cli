@@ -25,7 +25,7 @@ function setupConsoleUi() {
   const queue = genQueueBox();
   const logs = genLogsBox();
   
-  // // Add the ui components to the main screen component
+  // Add the ui components to the main screen component
   screen.append(queue);
   screen.append(history);
   screen.append(logs);

@@ -4,6 +4,8 @@ const { exec } = require('child_process');
 const path = require('path');
 const is = require('is_js');
 const { repos: { getByDir, deleteByDir } } = require('db');
+const { repoPath } = require('repos');
+const appPaths = require('paths');
 
 /**
  * Remove repo dir and the database reference
@@ -19,6 +21,14 @@ function removeRepo(dirName) {
         return Promise.reject('Hmm. That repo doesn\'t exist. Run "bots repos list" to check if the directory name is correct.');
       }
       const absPath = repoPath(dirName);
+
+      // Make sure the path is within the .botfarm dir to prevent accidentally 
+      // deleting the entire hard drive
+      const isBotfarmDir = absPath.includes(appPaths.repos);
+      if (! isBotfarmDir) {
+        throw new Error('Tried to delete an unsafe directory');
+      }
+
       // Careful now
       exec(`rm -r ${absPath}`, (err, stdout, stderr) => {
         if (err) {
