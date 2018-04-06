@@ -1,12 +1,7 @@
 const debug = require('debug')('botfarm:cli:gitCmd');
 const error = require('debug')('botfarm:error:cli:gitCmd');
+const runCmd = require('./run-in-repo');
 const is = require('is_js');
-const path = require('path');
-const paths = require('paths');
-const { exec } = require('child_process');
-const { repoPath } = require('./repo-path');
-
-const reposPath = paths.repos;
 
 /**
  * Run a git command from inside of a bot repository. Pretty much all of the git
@@ -15,19 +10,13 @@ const reposPath = paths.repos;
  * @param {string} gitOp the operation to run ie - add, commit, pull etc...
  * @param {string} args arguments to be passed after the command ie - "origin master"
  */
-const gitCmd = (dir, gitOp, args) => new Promise(resolve => {
+const gitCmd = async (dir, gitOp, args) => {
   if (is.not.string(gitOp)) {
     error('gitCmd expects gitOp to be string');
     return;
   }
-  const absDirPath = repoPath(dir);
-  const cd = `cd ${absDirPath}`;
   const git = `git ${gitOp} ${args}`;
-  const execCommand = `${cd} && ${git}`;
-  exec(execCommand, (err, stdout, stderr) => {
-    debug(stdout, stderr);
-    resolve();
-  });
-});
+  return await runCmd(dir, git);
+}
 
 module.exports = gitCmd;

@@ -4,6 +4,7 @@ const is = require('is_js');
 const path = require('path');
 const { reposWithBotfiles } = require('repos');
 const gitCmd = require('./git-cmd');
+const initRepo = require('./init-repo');
 
 
 /**
@@ -24,6 +25,7 @@ async function updateOne(dirName) {
     return Promise.reject('Expects dirName to be string');
   }
   await gitCmd(dirName, 'pull', 'origin master');
+  await initRepo(dirName);
   return true;
 }
 
