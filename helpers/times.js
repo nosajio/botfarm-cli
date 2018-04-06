@@ -1,6 +1,11 @@
 const debug = require('debug')('botfarm:helpers:times');
 const datefns = require('date-fns');
 
+function timeString(timestamp) {
+  const date = new Date(timestamp);
+  return datefns.format(date, 'HH:mm:ss');
+}
+
 function dueInString(timestamp, shorten = false) {
   const dueDate = new Date(timestamp);
   const now = new Date();
@@ -15,4 +20,4 @@ function dueInString(timestamp, shorten = false) {
   return now > dueDate ? `${distance} ago` : distance;
 }
 
-module.exports = { dueInString }
+module.exports = { dueInString, timeString }

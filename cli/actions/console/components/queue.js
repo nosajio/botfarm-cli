@@ -80,9 +80,9 @@ function genQueueBox(top = 0, left = 0, width = '30%', height = '70%') {
   return queueBox;
 }
 
-module.exports = genQueueBox;
-
 function renderTableBox(queueBox, tableBox) {
   queueBox.append(tableBox);
   queueBox.screen.render();
 }
+
+module.exports = genQueueBox;
