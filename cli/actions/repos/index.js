@@ -1,6 +1,7 @@
 const debug = require('debug')('botfarm:cli:repoActions');
 const error = require('debug')('botfarm:error:cli:repoActions');
 const ora = require('ora');
+const { renewQueue } = require('queue');
 
 const addRepo = require('./action-add');
 const listRepos = require('./action-list');
@@ -19,6 +20,7 @@ function repoActions(cmd, locations) {
       msg = ora('Adding repository').start();
       debug(url, dir);
       addRepo(url, dir)
+        .then(() => renewQueue())
         .then(() => msg.succeed(`Repository "${dir}" has been added`), reason => error(reason))
         .catch(err => error(err));
       break;
@@ -34,6 +36,7 @@ function repoActions(cmd, locations) {
       msg = ora(`Removing repository ${locations[0]}`).start();
       const genericError = 'There was a problem deleting the repository. Check the directory name is correct. If error persists, make sure node has write and delete access to the ./.userfiles directory.';
       removeRepo(locations[0])
+        .then(() => renewQueue())
         .then(() => msg.succeed('Repository has been removed.'))
         .catch(err => { msg.fail(genericError); error(err) });
       break;
@@ -43,11 +46,13 @@ function repoActions(cmd, locations) {
       if (dirName) {
         msg = ora('Updating repository');
         updateRepo(dirName)
+          .then(() => renewQueue())
           .then(() => msg.succeed(`Repository "${dirName}" is now up to date.`))
           .catch(err => msg.fail(err));
       } else {
         msg = ora('Updating repositories');        
         updateRepos()
+          .then(() => renewQueue())
           .then(() => msg.succeed('All repositories have been updated.'))
           .catch(err => { msg.fail(err); error(err); });
       }
