@@ -100,8 +100,12 @@ function getPid() {
 function deamonStatus() {
   const runningStr = 'Botfarm daemon is running.'
   const notRunningStr = 'Botfarm daemon is stopped.'
+  return deamonStatusBool() ? runningStr : notRunningStr;
+}
+
+function deamonStatusBool() {
   const pid = getPid();
-  return pid ? runningStr : notRunningStr;
+  return pid ? true : false;
 }
 
 /**
@@ -111,4 +115,4 @@ function clearPid() {
   fs.unlinkSync(pidPath);
 }
 
-module.exports = { status: deamonStatus, start: startDaemon, stop: stopDaemon };
+module.exports = { statusBool: deamonStatusBool, status: deamonStatus, start: startDaemon, stop: stopDaemon };

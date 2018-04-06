@@ -5,6 +5,7 @@ const blessed = require('blessed');
 const genHistoryBox = require('./components/history');
 const genLogsBox = require('./components/logs');
 const genQueueBox = require('./components/queue');
+const genStatusbar = require('./components/statusbar');
 
 module.exports = consoleActions;
 
@@ -23,11 +24,13 @@ function setupConsoleUi() {
   const history = genHistoryBox();
   const queue = genQueueBox();
   const logs = genLogsBox();
+  const statusbar = genStatusbar();
 
   // Add the ui components to the main screen component
   screen.append(queue);
   screen.append(history);
   screen.append(logs);
+  screen.append(statusbar);
 
   // Close console with ctrl-c or q
   screen.key(['C-c', 'q'], function (ch, key) {

@@ -18,7 +18,7 @@ function genLogsBox() {
     top: 0,
     label: 'Logs',
     width: '70%',
-    height: '100%',
+    height: '100%-1',
     border: {
       type: 'line'
     },

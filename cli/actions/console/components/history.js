@@ -71,11 +71,12 @@ function updateEvery(seconds, historyBox) {
   }, seconds * 1000);
 }
 
-function genHistoryBox(top = '70%', left = 0, width = '30%') {
+function genHistoryBox(top = '70%', left = 0, width = '30%', height = '30%-1') {
   const historyBox = blessed.box({
     top, 
     left,
     width,
+    height,
     label: 'History',
     border: {
       type: 'line',
