@@ -8,8 +8,8 @@ const is = require('is_js');
  */
 
 const patterns = {
-  // 10 minutes, 6 hours...
-  minsHrs: /^([0-5]*[0-9]) ?(minute|hour)/,
+  // 10 minutes, 30 seconds, 6 hours...
+  relative: /^([0-5]*[0-9]) ?(minute|hour|second)/,
   // 6am, 10:20pm, ...
   exact: /^([0-1]?[0-9]):?([0-5][0-9])?(am?|pm?)/,
   // :30, :01...
@@ -45,17 +45,20 @@ const nextOccurance = (HH, MM) => {
 /**
  * Parse mins/hrs pattern
  * 
- * @param {string} str Time string, like: 1 hour, 30 minutes etc
+ * @param {string} str Time string, like: 1 hour, 30 minutes, 21 seconds etc
  */
-const parseMinsHrs = str => {
-  const parsed = str.match(patterns.minsHrs);
+const parseRelative = str => {
+  const parsed = str.match(patterns.relative);
   const value = parseInt(parsed[1]);
   const hours = parsed[2] === 'hour';
+  const type = parsed[2];
   const now = new Date();
-  if (hours) {
-    return datefns.addHours(now, value);
+  // Handle different units by leaning on datefns
+  switch(type) {
+    case 'second': return datefns.addSeconds(now, value);
+    case 'minute': return datefns.addMinutes(now, value);
+    case 'hour': return datefns.addHours(now, value);
   }
-  return datefns.addMinutes(now, value);
 }
 
 
@@ -115,8 +118,8 @@ const parseRunTime = autorunStr => {
   const commands = autorunStr.replace(/, /g, ',').split(',');
   commands.forEach(c => {
     // 1 hour, 10 minutes, etc
-    if (patterns.minsHrs.test(c)) {
-      parsedTimes.push( parseMinsHrs(c) );
+    if (patterns.relative.test(c)) {
+      parsedTimes.push( parseRelative(c) );
     } else
 
     if (patterns.exact.test(c)) {
