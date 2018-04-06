@@ -5,4 +5,6 @@ module.exports = {
   getBotfile: require('./get-botfile'),
   botfileFromRepoId: require('./botfile-from-repo-id'),
   repoWithBotfile: require('./repo-with-botfile'),
+  remove: require('./remove-repo'),
+  update: require('./update-repos'),
 }

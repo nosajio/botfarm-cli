@@ -4,7 +4,7 @@ const is = require('is_js');
 const path = require('path');
 const paths = require('paths');
 const { exec } = require('child_process');
-const { repoPath } = require('repos');
+const { repoPath } = require('./repo-path');
 
 const reposPath = paths.repos;
 
