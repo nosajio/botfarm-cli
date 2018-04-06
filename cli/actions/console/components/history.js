@@ -1,6 +1,7 @@
 const debug = require('debug')('botfarm:cli:console');
 const error = require('debug')('botfarm:error:cli');
 const blessed = require('blessed');
+const is = require('is_js');
 const { outputs } = require('db');
 const { dueInString, timeString } = require('helpers/times');
 
@@ -43,7 +44,7 @@ async function historyTable() {
     mouse: true,
     tags: true,
   });
-  if (! last15Outputs) {
+  if (is.empty(last15Outputs)) {
     table.setContent('{center}No history to show{/center}');
     return table;
   }

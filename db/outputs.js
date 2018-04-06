@@ -1,5 +1,6 @@
 const error = require('debug')('botfarm:error:db:outputs');
 const debug = require('debug')('botfarm:db:outputs');
+const is = require('is_js');
 const query = require('./query');
 
 // Helper to sort logs so new ones are at the end of the output. Makes it 
@@ -36,7 +37,7 @@ module.exports = db => {
     try {
       const rows = await query(db, 'SELECT * FROM bot_outputs ORDER BY id DESC LIMIT $1 ', [limit]);
       if (is.empty(rows)) {
-        return null;
+        return [];
       }
       const sortedRows = sortAsc ? sortOutputsAsc(rows) : rows;
       return sortedRows;
@@ -74,6 +75,7 @@ module.exports = db => {
    */
   const search = async ({ bot_name, id_gt, id_lt, limit }) => {
     try {
+      // Construct the query using options
       const querySelect = 'SELECT * FROM bot_outputs';
       const queryParts = [];
       const queryParams = [];
@@ -89,9 +91,21 @@ module.exports = db => {
         queryParams.push(id_lt);
         queryParts.push(`id < $${queryParams.length}`);
       }
+
+      // Without any query parts or params, the query can't be constructed
+      if (is.empty(queryParts) || is.empty(queryParams)) {
+        return [];
+      }
+
       let queryStr = queryParts.length > 1 ? queryParts.join(' AND ') : queryParts[0];
       const limitStr = limit ? `LIMIT ${limit}` : '';
-      const rows = await query(db, `${querySelect} WHERE ${queryStr} ORDER BY id DESC ${limitStr}`, queryParams);
+      const searchQuery = `${querySelect} WHERE ${queryStr} ORDER BY id DESC ${limitStr}`;
+      const rows = await query(db, searchQuery, queryParams);
+
+      if (is.empty(rows)) {
+        return [];
+      }
+
       const sortedRows = sortOutputsAsc(rows);
       return rows;
     } catch (err) {

@@ -30,7 +30,7 @@ async function streamGtId(id_gt, writeStream) {
   const rows = await db.outputs.search({ id_gt });
   // When no new logs are available, return the same id that was passed in so 
   // the caller can try again at a later time
-  if (!rows.length) {
+  if (is.empty(rows)) {
     return id_gt;
   }
   rows.forEach(log => {
@@ -43,7 +43,7 @@ async function streamGtId(id_gt, writeStream) {
 
 
 async function streamLogs(botName, opts, streamOut = process.stdout) {
-  if (! streamMarker) {
+  if (streamMarker === undefined) {
     // How many logs to return initially
     const initialLogsCount = 10;
 
@@ -56,7 +56,7 @@ async function streamLogs(botName, opts, streamOut = process.stdout) {
     
     // In the event that there are no logs in the db to start with, 
     // just start looking from id 0
-    if (! is.empty(seedResult)) {
+    if (is.not.empty(seedResult)) {
       // Pipe the seed logs to the output
       seedResult.forEach(r => readStream.push(formatLogEntry(r)));
       // Use the last log's id as a marker to search from
