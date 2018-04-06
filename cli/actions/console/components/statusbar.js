@@ -4,7 +4,13 @@ const blessed = require('blessed');
 const { statusBool } = require('cli/daemon');
 
 function update(statusBox) {
-  const statusMessage = statusBool() ? `{bold}Service running{/bold}` : `{bold}Service stopped{/bold}`;
+  const running = statusBool();
+  const statusMessage = running ? `Service running` : `Service stopped`;
+  statusBox.style = {
+    bg: running ? 'green' : 'white',
+    fg: 'black',
+    bold: true,
+  }
   statusBox.setContent(statusMessage);
 }
 
@@ -21,13 +27,12 @@ function genStatusbar() {
     left: 0,
     top: '100%-1',
     width: '100%-1',
-    tags: true,
     padding: {
       left: 1,
     },
     style: {
-      bg: 'blue',
-      fg: 'white',
+      bg: 'white',
+      fg: 'black',
     }
   });
   update(statusBox);
