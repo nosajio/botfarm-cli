@@ -55,10 +55,10 @@ function renderHistoryTable(historyBox, tableBox) {
 
 function updateEvery(seconds, historyBox) {
   setTimeout(() => {
-    // Remove the table
-    historyBox.children.pop();
     // Re-add the table with fresh data
     historyTable().then(tableBox => {
+      // Remove the table
+      historyBox.children.pop();
       renderHistoryTable(historyBox, tableBox);
       updateEvery(seconds, historyBox);
     });
