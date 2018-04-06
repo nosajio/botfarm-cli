@@ -38,4 +38,5 @@ async function rebuildQueue() {
   const msg = ora('Rebuilding the queue').start();
   await queue.renewQueue();
   msg.succeed('Queue successfully rebuilt!');
+  db.queue.get().then(entries => showQueueTable(entries));
 }
