@@ -17,13 +17,14 @@ const { botPath } = require('./bot-path');
  * @param {string} autorun Autorun entry from the botfile
  * @returns {object}
  */
-const botShape = (repoDir, repoId, botName, load, autorun) =>  {
+const botShape = (repoDir, repoId, repoName, botName, load, autorun) =>  {
   const loadPath = botPath(repoDir, load);
   return {
     loader: loadPath,
     repo_id: repoId,
     repo_dir: repoDir,
     bot_name: botName,
+    repo_name: repoName,
     autorun,
   }
 }
@@ -80,7 +81,7 @@ const prepareDueBot = (bot, botfileBots, repos) => {
   const repo = repos.find(f => f.id = bot.repo_id);
   const botfileEntry = botfileBots[bot.bot_name];
   const loader = botfileEntry.load;
-  const preparedBot = botShape(repo.dir, repo.id, bot.bot_name, loader, botfileEntry.autorun);
+  const preparedBot = botShape(repo.dir, repo.id, repo.name, bot.bot_name, loader, botfileEntry.autorun);
   return preparedBot;
 }
 
