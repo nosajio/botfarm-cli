@@ -31,11 +31,11 @@ const queueRow = (index, repoName, botName, time) => {
  * @param {array} queueItems Rows from the queue table
  */
 const queueTable = async queueItems => {
-  const queueData = await queue.getWithRefs();
+  const queueData = await queue.get();
   const table = blessed.box({
   });
   queueData.forEach((it, i) => {
-    table.append(queueRow(i, it.repo.name, it.bot_name, it.time));
+    table.append(queueRow(i, it.repo_name, it.bot_name, it.time));
   });
   return table;
 }

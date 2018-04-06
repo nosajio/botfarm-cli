@@ -19,7 +19,7 @@ const renewQueue = async () => {
   
   const queueOps = repos.map(repo => {
     const botsWithRunTimes = nextRunTimes(repo.botfile);
-    return pushMany(botsWithRunTimes, repo.id);
+    return pushMany(botsWithRunTimes, repo.id, repo.name);
   });
   const queueOpsRes = await Promise.all(queueOps);
   return queueOpsRes;

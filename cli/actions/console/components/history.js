@@ -36,14 +36,19 @@ function historyTableRow(index, repoName, botName, outType, time, runtime) {
 }
 
 async function historyTable() {
-  const last15Outputs = await outputs.allWithRefs(15, false);
+  const last15Outputs = await outputs.all(15, false);
   const table = blessed.box({
     scrollable: true,
     alwaysScroll: true,
-    mouse: true,    
+    mouse: true,
+    tags: true,
   });
+  if (! last15Outputs) {
+    table.setContent('{center}No history to show{/center}');
+    return table;
+  }
   last15Outputs.forEach((op, i) => {
-    table.append( historyTableRow(i, op.repo.name, op.bot_name, op.type, op.time, op.runtime_ms) )
+    table.append( historyTableRow(i, op.repo_name, op.bot_name, op.type, op.time, op.runtime_ms) )
   });
   return table;
 }

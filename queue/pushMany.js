@@ -11,16 +11,21 @@ const push = require('./push');
  * @param {object} bots 
  * @param {string} bots.[botname].file
  * @param {array} bots.[botname].runTimes
- * @param {string}  bots.[botname].autorun
+ * @param {string} bots.[botname].autorun
+ * @param {number} repoId
+ * @param {string} repoName
  */
-const pushMany = async (bots, repoId) => {
+const pushMany = async (bots, repoId, repoName) => {
   if (is.not.object(bots)) throw new TypeError('bots arg is not an Object');
   if (is.not.number(repoId)) throw new TypeError('pushMany expects repoId to be number');
+  if (is.not.string(repoName)) throw new TypeError('pushMany expects repoName to be string');
+
   const pushOps = Object
     .entries(bots)
     .map(
-      ([bot_name, botProps]) => push({ repo_id: repoId, bot_name, time: botProps.runTimes[0] })
+      ([bot_name, botProps]) => push({ repo_id: repoId, bot_name, repo_name: repoName, time: botProps.runTimes[0] })
     );
+    
   const results = await Promise.all(pushOps);
   return results;
 }

@@ -4,6 +4,7 @@ CREATE TABLE bot_outputs (
     output text,
     repo_id integer,
     bot_name VARCHAR(255),
+    repo_name VARCHAR(255),
     runtime_ms integer,
     "time" timestamp with time zone
 );
@@ -13,6 +14,7 @@ CREATE TABLE bot_queue (
     id INTEGER PRIMARY KEY ASC,
     "time" timestamp with time zone,
     repo_id integer,
+    repo_name VARCHAR(255),
     bot_name VARCHAR(255)
 );
 

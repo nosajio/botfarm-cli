@@ -39,12 +39,13 @@ module.exports = db => ({
    *  Push an item into the queue
    *  @param {object} item
    *  @param {string} item.bot_name
+   *  @param {string} item.repo_name
    *  @param {Date} item.time
    *  @param {number} item.repoId
    */
   push: async item => {
     try {
-      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, repo_id, time) VALUES ($1, $2, $3)', [item.bot_name, item.repo_id, item.time]);
+      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, repo_name, repo_id, time) VALUES ($1, $2, $3, $4)', [item.bot_name, item.repo_name, item.repo_id, item.time]);
       return rows;
     } catch (err) {
       throw err;
