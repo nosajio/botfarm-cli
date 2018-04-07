@@ -30,6 +30,12 @@ const repoDirList = dir => new Promise(resolve => {
 const isNodeProject = dirList => dirList.includes('package.json');
 
 /**
+ * Check if the project has a botfile
+ * @param {string} dirList 
+ */
+const hasBotfile = dirList => dirList.includes('botfile.js');
+
+/**
  * Examines a repo and returns information about it. Things like project type,
  * file count etc
  * @param {string} dir the repo dir relative to .repos
@@ -39,6 +45,7 @@ const profileRepo = async dir => {
   const isNode = isNodeProject(dirList);
   return {
     nodeProject: isNode,
+    hasBotfile: hasBotfile(dirList),
     files: {
       count: dirList.length,
       list: dirList,

@@ -4,7 +4,7 @@
   "description": "Farming but with robots",
   "main": "index.js",
   "scripts": {
-    "test": "tape ./spec/**/*.spec.js | tap-diff",
+    "test": "jest",
     "dev": "DEBUG=botfarm:* NODE_PATH=. AUTOSTART=TRUE nodemon index.js --ignore scripts/ --ignore cli/",
     "build_queue": "NODE_PATH=. node ./scripts/build-queue.js",
     "init": "sh scripts/init.sh",
@@ -33,6 +33,7 @@
     "debug": "^3.1.0",
     "dotenv": "^5.0.0",
     "is_js": "^0.9.0",
+    "jest": "^22.4.3",
     "ora": "^2.0.0",
     "sleep": "^5.1.1",
     "sqlite3": "^3.1.13",
@@ -40,7 +41,6 @@
   },
   "devDependencies": {
     "nodemon": "^1.15.1",
-    "tap-diff": "^0.1.1",
-    "tape": "^4.9.0"
+    "tap-diff": "^0.1.1"
   }
 }
