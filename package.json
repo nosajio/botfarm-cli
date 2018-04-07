@@ -4,7 +4,7 @@
   "description": "Farming but with robots",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_PATH=. jest",
     "dev": "DEBUG=botfarm:* NODE_PATH=. AUTOSTART=TRUE nodemon index.js --ignore scripts/ --ignore cli/",
     "build_queue": "NODE_PATH=. node ./scripts/build-queue.js",
     "init": "sh scripts/init.sh",
@@ -42,5 +42,7 @@
   "devDependencies": {
     "nodemon": "^1.15.1",
     "tap-diff": "^0.1.1"
+  },
+  "jest": {
   }
 }
