@@ -66,14 +66,16 @@ describe('CLI integration tests', () => {
     });
   });
 
-  it('stops without errors', async () => {
-    const [stdout, stderr] = await cliCmd('service', 'stop');
-    expect(! stderr);
-  });
-
-  it('removes repo without error', async () => {
-    const [stdout, stderr] = await cliCmd('repos', ['remove', testRepoName])
-    expect(! stderr);
+  describe('Cleanup', () => {
+    it('stops without errors', async () => {
+      const [stdout, stderr] = await cliCmd('service', 'stop');
+      expect(! stderr);
+    });
+  
+    it('removes repo without error', async () => {
+      const [stdout, stderr] = await cliCmd('repos', ['remove', testRepoName])
+      expect(! stderr);
+    });
   });
 
   describe('Invalid repo', () => {

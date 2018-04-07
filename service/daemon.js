@@ -62,6 +62,17 @@ function stopDaemon() {
   }
 }
 
+function restartDaemon() {
+  const running = deamonStatusBool();
+  // Cannot restart something that is stopped
+  if (! running) {
+    return false;
+  }
+  stopDaemon();
+  startDaemon();
+  return true;
+}
+
 /**
  * Clear the log files in logPaths. useful to run on boot to clear out previous 
  * session's logs.
@@ -115,4 +126,10 @@ function clearPid() {
   fs.unlinkSync(pidPath);
 }
 
-module.exports = { statusBool: deamonStatusBool, status: deamonStatus, start: startDaemon, stop: stopDaemon };
+module.exports = { 
+  statusBool: deamonStatusBool, 
+  status: deamonStatus, 
+  start: startDaemon, 
+  stop: stopDaemon, 
+  restart: restartDaemon 
+};

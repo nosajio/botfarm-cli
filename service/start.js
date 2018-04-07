@@ -6,7 +6,7 @@ const stop = require('./stop');
 
 const start = () => {
   // Always renew the queue on start 
-  queue.renewQueue()
+  return queue.renewQueue()
     .then(() => runloop())
     .catch(err => error(err) && stop());
 }
