@@ -1,3 +1,4 @@
+const error = require('debug')('botfarm:error:post-install');
 const path = require('path');
 const { exec } = require('child_process');
 
@@ -24,5 +25,6 @@ const seedDbScript = path.resolve(__dirname, 'seed_db.js');
 try {
   require(seedDbScript);
 } catch (err) {
+  error(err);
   console.error('There was a problem creating the database schema. This is most likely because the database already exists.')
 }
