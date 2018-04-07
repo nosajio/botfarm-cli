@@ -10,7 +10,7 @@ const os = require('os');
 // data will live
 // 
 // Default is the user's home directory
-const root = os.homedir();
+const root = path.join(os.homedir ? os.homedir() : (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE));
 const userdata = path.join(root, '.botfarm');
 
 const appPaths = {
