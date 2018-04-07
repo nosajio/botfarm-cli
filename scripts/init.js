@@ -5,8 +5,13 @@ const fs = require('fs');
 Object.entries(paths).forEach(([name, val]) => {
   try {
     fs.mkdirSync(val)
-    console.log('Created %s directory: %s', name, val);
-  } catch(err) {}
+    console.log('✔ Created %s directory: %s', name, val);
+  } catch(err) {
+    console.error(err);
+  }
 });
 
-console.log('Done');
+fs.chmodSync(paths.userdata, 0777);
+console.log('✔ Altered permissions for %s', paths.userdata);
+
+console.log('*~*~Done*~*~');

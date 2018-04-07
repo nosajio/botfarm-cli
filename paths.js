@@ -10,8 +10,18 @@ const os = require('os');
 // data will live
 // 
 // Default is the user's home directory
-const root = path.join(os.homedir ? os.homedir() : (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE));
+const root = path.join(
+  os.homedir ? 
+    os.homedir() 
+    : (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE)
+);
 const userdata = path.join(root, '.botfarm');
+
+// CAUTION
+// -----------------------------------------------------------------------------
+// The paths below will be created by the postinstall script in the root 
+// directory. If you don't want the directory to be created after install, 
+// don't put it in appPaths.
 
 const appPaths = {
   // Userdata directory location
