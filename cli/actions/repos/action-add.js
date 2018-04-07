@@ -11,9 +11,13 @@ async function addRepo(url, dir) {
   if (is.not.string(url) || is.not.string(dir)) {
     throw new TypeError('url and dir arguments must be strings');
   }
-  const created = await create(url, dir);
-  if (!created) {
-    console.log('Repo not added...');
+  try {
+    const created = await create(url, dir);
+    if (!created) {
+      throw new Error('Repo not added...');
+    }
+  } catch(err) {
+    throw err;
   }
 }
 

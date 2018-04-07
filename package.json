@@ -4,7 +4,7 @@
   "description": "Farming but with robots",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_PATH=. jest",
+    "test": "NODE_PATH=. jest --verbose",
     "dev": "DEBUG=botfarm:* NODE_PATH=. AUTOSTART=TRUE nodemon index.js --ignore scripts/ --ignore cli/",
     "build_queue": "NODE_PATH=. node ./scripts/build-queue.js",
     "init": "sh scripts/init.sh",

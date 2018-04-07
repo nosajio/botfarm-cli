@@ -18,11 +18,13 @@ function repoActions(cmd, locations) {
     case 'add': 
       const [url, dir] = locations;
       msg = ora('Adding repository').start();
-      debug(url, dir);
       addRepo(url, dir)
-        .then(() => renewQueue())
-        .then(() => msg.succeed(`Repository "${dir}" has been added`), reason => error(reason))
-        .catch(err => error(err));
+        .then(
+          () => msg.succeed(`Repository "${dir}" has been added`), 
+          reason => { msg.fail(reason); error(reason);  })
+        .catch(err => { msg.fail(err.toString); error(err); })
+        // TODO: instead of renewing the queue here, restart the service entirely
+        .then(() => renewQueue());
       break;
 
     case 'list': 
@@ -48,13 +50,13 @@ function repoActions(cmd, locations) {
         updateRepo(dirName)
           .then(() => renewQueue())
           .then(() => msg.succeed(`Repository "${dirName}" is now up to date.`))
-          .catch(err => msg.fail(err));
+          .catch(err => msg.fail(err.toString()));
       } else {
         msg = ora('Updating repositories');        
         updateRepos()
           .then(() => renewQueue())
           .then(() => msg.succeed('All repositories have been updated.'))
-          .catch(err => { msg.fail(err); error(err); });
+          .catch(err => { msg.fail(err.toString()); error(err); });
       }
       break;
   }

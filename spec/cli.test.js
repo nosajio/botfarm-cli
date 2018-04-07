@@ -2,9 +2,14 @@ const path = require('path');
 const cliCmd = require('./exec-cli-cmd');
 const is = require('is_js');
 
+// Just outputs a string of numbers
+const randomNameGenerator = () => `_safe_to_delete_${String(Math.floor(100000000 + Math.random() * 900000000))}`;
+
 const testRepo = path.join(__dirname, 'test-repo');
+const invalidRepo = path.join(__dirname, 'invalid-repo');
 // Give the repo a random name to avoid conflicting with user added repos
-const testRepoName = String(Math.floor(100000000 + Math.random() * 900000000));
+const testRepoName = randomNameGenerator();
+const invalidRepoName = randomNameGenerator();
 
 
 describe('CLI integration tests', () => {
@@ -70,4 +75,11 @@ describe('CLI integration tests', () => {
     const [stdout, stderr] = await cliCmd('repos', ['remove', testRepoName])
     expect(! stderr);
   });
+
+  describe('Invalid repo', () => {
+    it('should fail when adding a repo with no botfile', async () => {
+      const [stdout, stderr] = await cliCmd('repos', ['add', invalidRepo, invalidRepoName]);
+      expect(is.string(stderr));
+    });
+  })
 });

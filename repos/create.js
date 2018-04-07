@@ -1,16 +1,21 @@
 const { repos } = require('db');
 const gitCmd = require('./git-cmd');
-const validate = require('repos/validate');
+const profile = require('./profile');
 const initRepo = require('./init-repo');
+const removeRepo = require('./remove-repo');
 
 const createRepo = async (url, dir) => {
-  const validated = await validate(dir);
-  if (! validated.valid) {
-    // return Promise.reject(validated.reason);
-  }
   await gitCmd('', 'clone', `${url} ${dir || ''}`);
-  await initRepo(dir);
   await repos.new(url, dir).catch(err => { throw err });
+
+  // Validate the repo once it's been added
+  const repoInfo = await profile(dir);
+  if (! repoInfo.hasBotfile) {
+    await removeRepo(dir);
+    throw new Error('Repo cannot be added because it doesn\'t have a botfile.js file.');
+  }
+  
+  await initRepo(dir);
   return true;
 }
 
