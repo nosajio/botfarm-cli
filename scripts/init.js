@@ -13,5 +13,5 @@ Object.entries(paths).forEach(([name, val]) => {
   }
 });
 
-fs.chmodSync(paths.userdata, 0777);
+fs.chmodSync(paths.userdata, 0764);
 console.log('✔ Alter permissions for %s', paths.userdata);
