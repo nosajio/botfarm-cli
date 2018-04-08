@@ -13,6 +13,11 @@ const restartService = () => {
   process.exit();
 }
 
+const renderError = (msg, err) => {
+  msg.fail(err.toString());
+  error(err);
+}
+
 /**
  * 
  */
@@ -27,7 +32,7 @@ function repoActions(cmd, locations) {
       const [url, dir] = locations;
       msg = ora('Adding repository').start();
       addRepo(url, dir)
-        .catch(err => { msg.fail(err.toString); error(err); })
+        .catch(err => { renderError(msg, err) })
         .then(
           () => { msg.succeed(`Repository "${dir}" has been added`) }, 
           reason => { msg.fail(reason); error(reason); }
@@ -41,7 +46,7 @@ function repoActions(cmd, locations) {
     case 'list':
       msg = ora('Listing repositories').start();
       listRepos()
-        .catch(err => { msg.fail(err.toString()); error(err) })
+        .catch(err => { renderError(msg, err) })
         .then(() => msg.stop());
       break;
 
@@ -71,11 +76,11 @@ function repoActions(cmd, locations) {
         updateRepo(dirName)
           .then(() => restartService())
           .then(() => msg.succeed(`Repository "${dirName}" is now up to date.`))
-          .catch(err => msg.fail(err.toString()));
+          .catch(err => { renderError(msg, err) });
       } else {
         msg = ora('Updating repositories');        
         updateRepos()
-          .catch(err => { msg.fail(err.toString()); error(err); })
+          .catch(err => { renderError(msg, err) })
           .then(() => msg.succeed('All repositories have been updated.'))
           .then(() => restartService());
       }

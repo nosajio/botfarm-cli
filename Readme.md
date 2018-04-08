@@ -25,6 +25,8 @@ Sometimes the install will fail on Linux environments with `EACCES` permission e
 Once `botfarm-cli` is installed, botfarm can be accessed through the `bots` command.
 
 ### 1) Add a repo
+*Note: Make sure the repository can be cloned by the current machine. Invalid permissions will cause the add process to stall or fail.*
+
 To add a new repository of bots to botfarm, simply run (replace the url and name with your own):  
 `bots repo add http://url-to-repo repo-name`
 

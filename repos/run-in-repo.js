@@ -32,8 +32,11 @@ const runCommandsInDir = (dir, commands) => new Promise(resolve => {
   const fullCmd = `${cd} && ${cmdStr}`;
   debug('$ %s', fullCmd);
   exec(fullCmd, (err, stdout, stderr) => {
+    if (err) {
+      throw err;
+    }
     debug(stdout, stderr);
-    resolve();
+    resolve([stdout, stderr]);
   });
 });
 
