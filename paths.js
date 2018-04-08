@@ -17,7 +17,7 @@ const root = path.join(
 );
 const userdata = path.join(root, '.botfarm');
 
-// CAUTION
+// ⚠ CAUTION
 // -----------------------------------------------------------------------------
 // The paths below will be created by the postinstall script in the root 
 // directory. If you don't want the directory to be created after install, 
