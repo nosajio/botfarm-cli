@@ -2,7 +2,13 @@ const error = require('debug')('botfarm:error:post-install');
 const path = require('path');
 const { exec } = require('child_process');
 
-const initSh = path.resolve(__dirname, 'init.sh');
+// If the .botfarm directory already exists, then just return here because it's
+// already installed on this device
+const botfarmDirExists = require('./dir-check');
+if (botfarmDirExists()) {
+  console.log('Botfarm is already installed!')
+  return;
+}
 
 console.log('\nBotfarm Installing\n');
 
