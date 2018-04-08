@@ -22,5 +22,11 @@ function seed() {
 
   // Edit the schema.sql file to modify the schema
   const seedSQL = readFileSync(path.resolve(process.env.NODE_PATH, 'schema.sql'), 'utf8');
-  db.instance.exec(seedSQL);
+  db.instance.exec(seedSQL, err => {
+    if (err) {
+      throw err;
+      console.log('✖ Create data store');
+    }
+    console.log('✔ Create data store');
+  });
 }

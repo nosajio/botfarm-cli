@@ -17,6 +17,9 @@ const initSh = path.resolve(__dirname, 'init.sh');
 //   console.log(stdout);
 // });
 
+
+console.log('\nBotfarm Installing\n');
+
 const createDirsScript = path.resolve(__dirname, 'init.js');
 require(createDirsScript);
 
@@ -26,5 +29,4 @@ try {
   require(seedDbScript);
 } catch (err) {
   error(err);
-  console.error('There was a problem creating the database schema. This is most likely because the database already exists.')
 }
