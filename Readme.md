@@ -52,15 +52,25 @@ For example, let's say we have a repo containing two bots. One need's to be run 
 module.exports = () => ({
   'midnight-bot': {
     load: './run-me-at-midnight.js',
-    autorun: '12am',
+    autorun: '12am', // Tell the bot to run every midnight
   },
 
   'regular-bot': {
     load: './run-every-hour.js',
-    autorun: '1 hour',
+    autorun: ':00', // Tell the bot to run at every o'clock
   }
 });
 ```
+
+### Autorun strings
+Botfarm understands multiple time formats for autorun strings.  
+
+| Examples                                | Meanings                                    |
+|-----------------------------------------|---------------------------------------------|
+| `5 hours` or `1 minute` or `25 seconds` | Run the bot at specified intervals.         |
+| `:10` or `:45`                          | Run the bot at the same time every hour.    |
+| `3:15pm` or `8am`                       | Run the bot at a specific time every day.   |
+| `2:30pm, 9pm`                           | Run the bot at 2:30pm and at 9pm every day. |
 
 ---
 
@@ -69,3 +79,26 @@ The botfarm console is the nerve center for your bots. With the console you can 
 
 Access the console by running:  
 `bots console`
+
+## The queue
+Botfarm keeps an internal queue where it stores the time that each bot is next due to be run. To see the queue:  
+`bots queue show`
+
+Sometimes you might want to manually rebuild the queue. To rebuild the queue, run:  
+`bots queue rebuild`
+
+
+---
+*Remaning docs coming soon. See bin/cli.js for all commands.*
+
+## Logs
+
+## Manually run a bot
+
+## Update bot repos
+### Delete a repo
+
+---
+
+## Contributions are encouraged 😃
+

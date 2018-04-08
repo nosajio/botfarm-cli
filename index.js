@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const error = require('debug')('botfarm:error');
 const debug = require('debug')('botfarm:boot');
 
