@@ -13,17 +13,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/nosaj/botfarm.git"
+    "url": "git@github.com:nosajio/botfarm-cli.git"
   },
   "author": "Jason Howmans <yo@nosaj.io>",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/nosaj/botfarm/issues"
+    "url": "https://github.com/nosajio/botfarm-cli/issues"
   },
   "bin": {
     "bots": "./cli/bin.js"
   },
-  "homepage": "https://gitlab.com/nosaj/botfarm#README",
+  "homepage": "https://github.com/nosajio/botfarm-cli",
   "dependencies": {
     "blessed": "^0.1.81",
     "chalk": "^2.3.2",
