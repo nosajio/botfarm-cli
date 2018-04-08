@@ -2,10 +2,10 @@
 
 Like cron with superpowers. You can write scripts (or "bots") and tell them when to run. Botfarm takes care of setup, scheduling, and capturing logs.  
 
-  - ⏲️   Schedule: Configure bots to run at specific times or at intervals.
-  - 📺   Console: Observe bots and explore outputs.
-  - 📦   Git: Sync your own repos of bots with botfarm to make updates easier.
-  - 🏃‍♀️  Easy: No setup required, just add some bots and you're done!  
+  - ⏲️   **Schedule**: Configure bots to run at specific times or at intervals.
+  - 📺   **Console**: Observe bots and explore outputs.
+  - 📦   **Git**: Sync your own repos of bots with botfarm to make updates easier.
+  - 🏃‍♀️  **Easy**: No setup required, just add some bots and you're done!  
 
 Having trouble? Submit an issue or ask [Jason](https://twitter.com/__nosaj) a question on twitter.
 
@@ -22,7 +22,7 @@ Sometimes the install will fail on Linux environments with `EACCES` permission e
 ---
 
 ## Get started in 2 steps
-Once `botfarm-cli` is installed, botfarm can be accessed through the `bots` command. 
+Once `botfarm-cli` is installed, botfarm can be accessed through the `bots` command.
 
 ### 1) Add a repo
 To add a new repository of bots to botfarm, simply run (replace the url and name with your own):  
