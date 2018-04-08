@@ -1,6 +1,6 @@
 {
   "name": "botfarm-cli",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Farming but with robots",
   "main": "index.js",
   "scripts": {
