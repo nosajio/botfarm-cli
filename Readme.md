@@ -1,3 +1,71 @@
-# Botfarm Runner 🤖⏯
+# Botfarm CLI
 
-The runner is responsible for keeping track of which bots need to be run next and then running them at the correct time.
+Like cron with superpowers. You can write scripts (or "bots") and tell them when to run. Botfarm takes care of setup, scheduling, and capturing logs.  
+
+  - ⏲️   Schedule: Configure bots to run at specific times or at intervals.
+  - 📺   Console: Observe bots and explore outputs.
+  - 📦   Git: Sync your own repos of bots with botfarm to make updates easier.
+  - 🏃‍♀️  Easy: No setup required, just add some bots and you're done!  
+
+Having trouble? Submit an issue or ask [Jason](https://twitter.com/__nosaj) a question on twitter.
+
+## Install
+
+  - `npm install -g node-gyp`
+  - `npm install -g botfarm-cli`
+
+### Troubleshooting
+Sometimes the install will fail on Linux environments with `EACCES` permission errors. To remedy this, you can re-install with the `--unsafe-perm` flag:  
+
+`npm install -g --unsafe-perm node-gyp botfarm-cli`
+
+---
+
+## Get started in 2 steps
+Once `botfarm-cli` is installed, botfarm can be accessed through the `bots` command. 
+
+### 1) Add a repo
+To add a new repository of bots to botfarm, simply run (replace the url and name with your own):  
+`bots repo add http://url-to-repo repo-name`
+
+### 2) Start the service
+The background service must be running if you want bots to actually run. Start the service by running:  
+`bots service start`
+
+**Check if the service is running** with:  
+`bots service status`
+
+**Stop the service** by running:  
+`bots service stop`
+
+---
+
+## Bot repo configuration
+Botfarm isn't opinionated about the structure of repos. The only requirement is to have a `botfile.js` file in the root of the repo.
+
+## The botfile
+Every repo should have a botfile in its root. A botfile is a simple JS file that tells botfarm what to run and when to run it. It exports a function that returns an object containing bots. 
+
+For example, let's say we have a repo containing two bots. One need's to be run every night at 12am, and the other runs on the hour every hour:
+
+```Javascript
+module.exports = () => ({
+  'midnight-bot': {
+    load: './run-me-at-midnight.js',
+    autorun: '12am',
+  },
+
+  'regular-bot': {
+    load: './run-every-hour.js',
+    autorun: '1 hour',
+  }
+});
+```
+
+---
+
+## The console
+The botfarm console is the nerve center for your bots. With the console you can monitor the queue to see when bots are due. Monitor the history to see which bots ran successfully, which ones took a long time, and which ones failed. And see a stream of logs neatly organised by each bot.
+
+Access the console by running:  
+`bots console`
