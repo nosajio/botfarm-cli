@@ -32,7 +32,6 @@ function startDaemon() {
   resetLogs();
   const stdout = fs.openSync(logPaths.stdout, 'a');
   const stderr = fs.openSync(logPaths.stderr, 'a');
-  debug(startScriptPath)
   const backgroundProcess = spawn(process.execPath, [startScriptPath], {
     stdio: ['ipc', stdout, stderr],
     detached: true,

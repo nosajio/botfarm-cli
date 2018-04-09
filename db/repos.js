@@ -6,7 +6,7 @@ const uuid = require('uuid/v4');
 module.exports = db => ({
   get: async id => {
     try {
-      const row = await query(db, 'SELECT * FROM repos WHERE id = $1', [id]);
+      const row = await query(db, 'SELECT * FROM repos WHERE id = ?', [id]);
       return row[0];
     } catch(err) {
       throw err;
@@ -15,7 +15,7 @@ module.exports = db => ({
 
   getByDir: async dirName => {
     try {
-      const row = await query(db, 'SELECT * FROM repos WHERE dir = $1', [dirName]);
+      const row = await query(db, 'SELECT * FROM repos WHERE dir = ?', [dirName]);
       return row[0];
     } catch (err) {
       throw err;
@@ -34,7 +34,7 @@ module.exports = db => ({
   new: async (repoUrl, repoName) => {
     try {
       const randomUUID = uuid();
-      await query(db, 'INSERT INTO repos (uuid, name, dir, repository) VALUES ($1, $2, $3, $4)', [randomUUID, repoName, repoName, repoUrl]);
+      await query(db, 'INSERT INTO repos (uuid, name, dir, repository) VALUES (?, ?, ?, ?)', [randomUUID, repoName, repoName, repoUrl]);
       return randomUUID;
     } catch(err) {
       throw err;
@@ -43,7 +43,7 @@ module.exports = db => ({
 
   delete: async (id) => {
     try {
-      await query(db, 'DELETE FROM repos WHERE id = $1', [id]);
+      await query(db, 'DELETE FROM repos WHERE id = ?', [id]);
       return;
     } catch(ere) {
       throw err;
@@ -52,7 +52,7 @@ module.exports = db => ({
 
   deleteByDir: async dir => {
     try {
-      await query(db, 'DELETE FROM repos WHERE dir = $1', [dir]);
+      await query(db, 'DELETE FROM repos WHERE dir = ?', [dir]);
       return;
     } catch(err) {
       throw err;

@@ -13,7 +13,7 @@ async function addRepo(url, dir) {
   }
   try {
     const [created, stdout, stderr] = await create(url, dir);
-    if (!created || is.not.empty(stderr)) {
+    if (! created) {
       throw new Error(stderr);
     }
   } catch(err) {

@@ -6,9 +6,6 @@ const removeRepo = require('./remove-repo');
 
 const createRepo = async (url, dir) => {
   const [stdout, stderr] = await gitCmd('', 'clone', `${url} ${dir || ''}`);
-  if (stderr) {
-    throw new Error(stderr);
-  }
 
   await repos.new(url, dir).catch(err => { throw err });
 

@@ -35,7 +35,6 @@ const runCommandsInDir = (dir, commands) => new Promise(resolve => {
     if (err) {
       throw err;
     }
-    debug(stdout, stderr);
     resolve([stdout, stderr]);
   });
 });

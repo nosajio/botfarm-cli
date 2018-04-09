@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/nosajio/botfarm-cli",
   "dependencies": {
+    "better-sqlite3": "^4.1.0",
     "blessed": "^0.1.81",
     "chalk": "^2.3.2",
     "cli-table": "^0.3.1",
