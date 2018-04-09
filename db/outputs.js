@@ -18,9 +18,9 @@ module.exports = db => {
    * @param {number} startTime The time the bot started in milliseconds
    */
   const capture = async (type, output, repoId, bot_name, repo_name, startTime) => {
-    const runtime_ms = Date.now() - startTime;
+    const runtime_ms = Date.now() - parseInt(startTime);
     try {
-      await query(db, 'INSERT INTO bot_outputs (type, output, repo_id, bot_name, repo_name, runtime_ms, time) VALUES($1, $2, $3, $4, $5, $6, $7)', [type, output, repoId, bot_name, repo_name, runtime_ms, startTime]);
+      await query(db, 'INSERT INTO bot_outputs (type, output, repo_id, bot_name, repo_name, runtime_ms, time) VALUES(?, ?, ?, ?, ?, ?, ?)', [type, output, repoId, bot_name, repo_name, runtime_ms, startTime]);
       return;
     } catch (err) {
       error(err);
@@ -35,7 +35,7 @@ module.exports = db => {
    */
   const all = async (limit = 50, sortAsc = true) => {
     try {
-      const rows = await query(db, 'SELECT * FROM bot_outputs ORDER BY id DESC LIMIT $1 ', [limit]);
+      const rows = await query(db, 'SELECT * FROM bot_outputs ORDER BY id DESC LIMIT ? ', [limit]);
       if (is.empty(rows)) {
         return [];
       }
@@ -56,7 +56,7 @@ module.exports = db => {
     const allRows = await all(limit, sortAsc);
     if (! allRows) return null;
     const repoQueries = allRows.map(q =>
-      query(db, 'SELECT * FROM repos WHERE id = $1', [q.repo_id])
+      query(db, 'SELECT * FROM repos WHERE id = ?', [q.repo_id])
     );
     const reposIndex = (await Promise.all(repoQueries)).reduce((index, [curr]) => (
       { ...index, [curr.id]: curr }
@@ -81,15 +81,15 @@ module.exports = db => {
       const queryParams = [];
       if (bot_name) {
         queryParams.push(bot_name);
-        queryParts.push(`bot_name = $${queryParams.length}`);
+        queryParts.push(`bot_name = ?`);
       }
       if (id_gt) {
         queryParams.push(id_gt);
-        queryParts.push(`id > $${queryParams.length}`);
+        queryParts.push(`id > ?`);
       }
       if (id_lt) {
         queryParams.push(id_lt);
-        queryParts.push(`id < $${queryParams.length}`);
+        queryParts.push(`id < ?`);
       }
 
       // Without any query parts or params, the query can't be constructed

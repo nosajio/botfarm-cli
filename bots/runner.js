@@ -13,9 +13,10 @@ const { captureOutputStream } = require('./capture');
 const spawnBotProcess = (bot) => {
   const processFile = path.resolve(__dirname, 'spawn-process.js');
   const spawnedProcess = spawn('node', [processFile], {
+    stdio: ['pipe', 'pipe', 'pipe'],
     env: Object.assign({}, process.env, { 'BOT': JSON.stringify(bot) }),
   });
-  spawnedProcess.on('error', (err) => { throw err; } );
+  spawnedProcess.on('error', (err) => { error(err); } );
   return spawnedProcess;
 }
 

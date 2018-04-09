@@ -2,17 +2,17 @@ const debug = require('debug')('botfarm:seed_db');
 const path = require('path');
 const paths = require('paths');
 const { readFileSync } = require('fs');
-const { Database, OPEN_READWRITE, OPEN_CREATE } = require('sqlite3');
+const Database = require('sqlite3');
 
 // First, create the database, then run the seed once the database has
 // been created.
 const dbFileLocation = path.join(paths.userdata, 'store.sqlite');
-new Database(dbFileLocation, OPEN_READWRITE | OPEN_CREATE, err => {
-  if (err) {
-    throw err;
-  }
+try {
+  new Database(dbFileLocation);
   seed();
-})
+} catch(err) {
+  console.error(err);
+}
 
 function seed() {
   // Load db after the database file has been created. This is important because

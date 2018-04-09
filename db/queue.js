@@ -12,7 +12,7 @@ module.exports = db => ({
     try {
       const queueRows = await query(db, 'SELECT * FROM bot_queue ORDER BY time ASC', []);
       const repoQueries = queueRows.map(q => 
-        query(db, 'SELECT * FROM repos WHERE id = $1', [q.repo_id])
+        query(db, 'SELECT * FROM repos WHERE id = ?', [q.repo_id])
       );
       const reposIndex = (await Promise.all(repoQueries)).reduce((index, [curr]) => (
         { ...index, [curr.id]: curr }
@@ -45,7 +45,7 @@ module.exports = db => ({
    */
   push: async item => {
     try {
-      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, repo_name, repo_id, time) VALUES ($1, $2, $3, $4)', [item.bot_name, item.repo_name, item.repo_id, item.time]);
+      const rows = await query(db, 'INSERT INTO bot_queue (bot_name, repo_name, repo_id, time) VALUES (?, ?, ?, ?)', [item.bot_name, item.repo_name, item.repo_id, item.time]);
       return rows;
     } catch (err) {
       throw err;
@@ -56,8 +56,8 @@ module.exports = db => ({
   search: async ({ before }) => {
     let queryStr, predicate;
     if (before) {
-      queryStr = `SELECT * FROM bot_queue WHERE time <= $1`;
-      predicate = datefns.format(before, 'x'); // Convert to unix style timestamp
+      queryStr = `SELECT * FROM bot_queue WHERE time <= ?`;
+      predicate = before;
     }
     const rows = await query(db, queryStr, [predicate]);
     return rows;
@@ -72,10 +72,10 @@ module.exports = db => ({
    */
   take: async id => {
     try {
-      const rows = await query(db, 'SELECT * FROM bot_queue WHERE id=$1', [id]);
+      const rows = await query(db, 'SELECT * FROM bot_queue WHERE id=?', [id]);
       if (rows) {
         // The row must be removed from the queue to prevent the bot being called > 1 time
-        query(db, 'DELETE FROM bot_queue WHERE id=$1', [id]);
+        query(db, 'DELETE FROM bot_queue WHERE id=?', [id]);
         return rows;
       }
     } catch(err) {

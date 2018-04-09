@@ -8,11 +8,10 @@ const datefns = require('date-fns');
 const { runner } = require('bots');
 
 // A simple delay using native C++ sleep 
-const wait = async seconds => {
+const wait = seconds => new Promise(resolve => {
   debug('💤  Sleeping for %s seconds', seconds);
-  sleep(seconds);
-  return;
-};
+  setTimeout(() => resolve(), seconds * 1000);
+});
 
 // Re-add passed bots to the queue
 const requeueBots = ranBots => {
@@ -60,14 +59,15 @@ const runloop = async () => {
   const nextRunTime = await nextRun();
   const secsUntilNextRun = secsUntilDate(nextRunTime) || 5;
   wait(secsUntilNextRun)
-    .then(() => runner.runDueBots())
-    .catch(err => error(err))
+    // First off, run the bots that are due to be run
+    .then(() =>       runner.runDueBots())
+    .catch(err =>     error(err))
     // After running due bots, add their next runtimes to the queue
-    .then(ranBots => requeueBots(ranBots))
-    .catch(err => error(err))
-    // Finally, re-start the runloop 
-    .then(() => runloop())
-    .catch(err => error(err));
+    .then(ranBots =>  requeueBots(ranBots))
+    .catch(err =>     error(err))
+    // Finally, restart the runloop
+    .then(() =>       runloop())
+    .catch(err =>     error(err));
 }
 
 module.exports = runloop
