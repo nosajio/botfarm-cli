@@ -1,5 +1,7 @@
 # Botfarm CLI
 
+[![Build Status](https://travis-ci.org/nosajio/botfarm-cli.svg?branch=master)](https://travis-ci.org/nosajio/botfarm-cli)
+
 Like cron with superpowers. You can write scripts (or "bots") and tell them when to run. Botfarm takes care of setup, scheduling, and capturing logs.  
 
   - ⏲️   **Schedule**: Configure bots to run at specific times or at intervals.
