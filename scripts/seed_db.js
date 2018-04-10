@@ -2,7 +2,7 @@ const debug = require('debug')('botfarm:seed_db');
 const path = require('path');
 const paths = require('paths');
 const { readFileSync } = require('fs');
-const Database = require('sqlite3');
+const Database = require('better-sqlite3');
 
 // First, create the database, then run the seed once the database has
 // been created.

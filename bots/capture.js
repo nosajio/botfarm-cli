@@ -15,7 +15,6 @@ const capture = (output, repo_id, bot_name, repo_name, startTime) => {
   if (! output) {
     return;
   }
-  debug('%s, %s', bot_name, output);
   outputs.capture('stdout', output, repo_id, bot_name, repo_name, startTime);
 }
 
