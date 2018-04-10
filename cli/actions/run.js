@@ -8,6 +8,7 @@ module.exports = runActions;
 
 function runActions(pathName) {
   const [repoName, botName] = pathName.split('/');
+  // TODO fork option
   const msg = ora(`Running bot ${botName} in ${repoName}`);
   runner.loadAndRunBot(repoName, botName)
     .then(() => { 

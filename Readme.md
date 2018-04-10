@@ -9,17 +9,18 @@ Like cron with superpowers. You can write scripts (or "bots") and tell them when
   - 📦   **Git**: Sync your own repos of bots with botfarm to make updates easier.
   - 🏃‍♀️  **Easy**: No setup required, just add some bots and you're done!  
 
-Having trouble? Submit an issue or ask [Jason](https://twitter.com/__nosaj) a question on twitter.
-
 ## Install
 
   - `npm install -g node-gyp`
   - `npm install -g botfarm-cli`
 
 ### Troubleshooting
-Sometimes the install will fail on Linux environments with `EACCES` permission errors. To remedy this, you can re-install with the `--unsafe-perm` flag:  
+Sometimes on certain Linux systems the above installs will fail with permission errors. To remedy this, you can re-install with the `--unsafe-perm` flag:  
 
-`npm install -g --unsafe-perm node-gyp botfarm-cli`
+`npm install -g --unsafe-perm=true node-gyp`
+`npm install -g --unsafe-perm=true --allow-root botfarm-cli`
+
+Still having trouble? Submit an issue or ask [Jason](https://twitter.com/__nosaj) a question on twitter.
 
 ---
 
@@ -91,13 +92,30 @@ Botfarm keeps an internal queue where it stores the time that each bot is next d
 Sometimes you might want to manually rebuild the queue. To rebuild the queue, run:  
 `bots queue rebuild`
 
-
----
-*Remaning docs coming soon. See bin/cli.js for all commands.*
-
 ## Logs
+Stream all logs with 
+`bots logs --stream`
+
+Show the last 50 errors
+`bots logs -t stderr`
+
+Show the last 50 logs
+`bots logs -t stdout`
+
+Show logs for a specific bot
+`bots logs --bot repo/bot`
 
 ## Manually run a bot
+You can manually run any bot at any time. There are two ways to do it: 
+
+1) By default, if a bot is already queued, manually running it will remove it from the queue and re-add it after it's completed.
+`bots run repo/bot`
+
+2) The other option is to the bot independent of the queue. This leaves the queue alone and just runs the bot.
+`bots run repo/bot --fork`
+
+
+*Remaning docs coming soon. See bin/cli.js for all commands.*
 
 ## Update bot repos
 ### Delete a repo
