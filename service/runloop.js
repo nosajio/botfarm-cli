@@ -1,6 +1,5 @@
 const error = require('debug')('botfarm:error:service');
 const debug = require('debug')('botfarm:service:runloop');
-const { sleep } = require('sleep');
 const is = require('is_js');
 const db = require('db');
 const queue = require('queue');
