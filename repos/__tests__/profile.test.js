@@ -1,16 +1,15 @@
 const is = require('is_js');
 const profiler = require('../profile');
-const create = require('../create');
 
 // There will need to be a repo available called test-bots. The repo should be
 // a node project with a package.json file 
 const testRepoName = 'test-bots';
 
-describe('profile', async () => {
+describe('profile', () => {
   let p;
   beforeAll(async () => {
     p = await profiler(testRepoName);
-  })
+  });
 
   it('should return an object', () => {
     expect(is.object(p));
