@@ -17,7 +17,7 @@ Like cron with superpowers. You can write scripts (or "bots") and tell them when
 ### Troubleshooting
 Sometimes on certain Linux systems the above installs will fail with permission errors. To remedy this, you can re-install with the `--unsafe-perm` flag:  
 
-`npm install -g --unsafe-perm=true node-gyp`
+`npm install -g --unsafe-perm=true node-gyp`  
 `npm install -g --unsafe-perm=true --allow-root botfarm-cli`
 
 Still having trouble? Submit an issue or ask [Jason](https://twitter.com/__nosaj) a question on twitter.
