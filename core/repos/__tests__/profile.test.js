@@ -3,19 +3,23 @@ const profiler = require('../profile');
 const cliCmd = require('spec/exec-cli-cmd');
 const path = require('path');
 
-// There will need to be a repo available called test-bots. The repo should be
+// There will need to be a repo available called test-repo. The repo should be
 // a node project with a package.json file 
 const testRepoName = '__test-bots__';
 
 describe('profile', () => {
   let p;
   beforeAll(async () => {
-    // Clone the test repo
-    const testRepo = path.resolve(__dirname, '..', '..', '..', 'spec', 'test-repo');    
-    const [stdout, stderr] = await cliCmd('repos', ['add', testRepo, testRepoName]);
-    
-    // Profile the test repo
-    p = await profiler(testRepoName);
+    try {
+      // Clone the test repo
+      const testRepo = path.resolve(__dirname, '..', '..', '..', 'spec', 'test-repo');    
+      const [stdout, stderr] = await cliCmd('repos', ['add', testRepo, testRepoName]);
+      
+      // Profile the test repo
+      p = await profiler(testRepoName);
+    } catch(err) {
+      throw err;
+    }
 
     return true;
   }, 10000); // Set a high timeout because sometimes repos take a 
