@@ -21,7 +21,7 @@ function seed() {
   const db = require('db');
 
   // Edit the schema.sql file to modify the schema
-  const seedSQL = readFileSync(path.resolve(process.env.NODE_PATH, 'schema.sql'), 'utf8');
+  const seedSQL = readFileSync(path.resolve(__dirname, 'schema.sql'), 'utf8');
   db.instance.exec(seedSQL, err => {
     if (err) {
       throw err;

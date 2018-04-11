@@ -2,7 +2,7 @@ const debug = require('debug')('botfarm:cli:addAction');
 const error = require('debug')('botfarm:error:cli:addAction');
 const is = require('is_js');
 const path = require('path');
-const { create } = require('repos');
+const { create } = require('core/repos');
 
 /**
  * Add a repositiry and create reference in the database

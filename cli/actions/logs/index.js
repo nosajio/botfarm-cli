@@ -1,6 +1,6 @@
 const debug = require('debug')('botfarm:cli:logsActions');
 const error = require('debug')('botfarm:error:cli:logsActions');
-const db = require('db');
+const db = require('core/db');
 const { formatLogEntry, label } = require('./fmt');
 const streamLogs = require('./stream');
 

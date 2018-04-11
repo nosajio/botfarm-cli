@@ -1,6 +1,6 @@
 const debug = require('debug')('botfarm:cli:removeAction');
 const error = require('debug')('botfarm:error:cli:removeAction');
-const { remove } = require('repos');
+const { remove } = require('core/repos');
 
 /**
  * Remove repo dir and the database reference

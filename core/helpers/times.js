@@ -40,7 +40,7 @@ const friendlyRuntime = ms => {
   if (is.nan(ms)) {
     throw TypeError('argument is not a number');
   }
-  return ms >= 1000 ? `${(ms/1000).toFixed(2)}s` : `${ms}ms`;
+  return ms >= 1000 ? `${(ms/1000).toFixed(2).replace('.00', '')}s` : `${ms}ms`;
 }
 
 module.exports = { dueInString, timeString, friendlyRuntime }

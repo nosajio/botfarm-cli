@@ -1,7 +1,7 @@
 const debug = require('debug')('botfarm:cli:runActions');
 const error = require('debug')('botfarm:error:cli:runActions');
 const ora = require('ora');
-const { runner } = require('bots');
+const { runner } = require('core/bots');
 
 
 module.exports = runActions;

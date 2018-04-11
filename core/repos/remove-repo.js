@@ -3,7 +3,7 @@ const error = require('debug')('botfarm:error:repos:remove');
 const { exec } = require('child_process');
 const path = require('path');
 const is = require('is_js');
-const { repos: { getByDir, deleteByDir } } = require('db');
+const { repos: { getByDir, deleteByDir } } = require('core/db');
 const { repoPath } = require('./repo-path');
 const appPaths = require('paths');
 

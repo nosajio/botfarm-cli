@@ -1,10 +1,10 @@
 const error = require('debug')('botfarm:error:service');
 const debug = require('debug')('botfarm:service:runloop');
 const is = require('is_js');
-const db = require('db');
-const queue = require('queue');
 const datefns = require('date-fns');
-const { runner } = require('bots');
+const db = require('core/db');
+const queue = require('core/queue');
+const { runner } = require('core/bots');
 
 // A simple delay using native C++ sleep 
 const wait = seconds => new Promise(resolve => {

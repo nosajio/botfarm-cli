@@ -3,7 +3,7 @@ const error = require('debug')('botfarm:error:cli:listAction');
 const Table = require('cli-table');
 const is = require('is_js');
 const path = require('path');
-const { reposWithBotfiles } = require('repos');
+const { reposWithBotfiles } = require('core/repos');
 
 /**
  * Output a list of repositories

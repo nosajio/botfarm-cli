@@ -1,8 +1,8 @@
 const debug = require('debug')('botfarm:cli:console');
 const error = require('debug')('botfarm:error:cli');
 const blessed = require('blessed');
-const { queue } = require('db');
-const { dueInString } = require('helpers/times');
+const { queue } = require('core/db');
+const { dueInString } = require('core/helpers/times');
 
 /**
  * Generate a row for the queue table

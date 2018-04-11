@@ -1,6 +1,6 @@
 const debug = require('debug')('botfarm:repos:reposWithBotfiles');
 const error = require('debug')('botfarm:error:repos:reposWithBotfiles');
-const { repos } = require('db');
+const { repos } = require('core/db');
 const getBotfile = require('./get-botfile');
 
 const reposWithBotfiles = async () => {

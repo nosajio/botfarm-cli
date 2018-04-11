@@ -1,5 +1,5 @@
 const debug = require('debug')('botrepo:botfiles:botPath');
-const { repoPath } = require('repos');
+const { repoPath } = require('core/repos');
 const path = require('path');
 
 const botPath = (repoDir, loaderFile) => {

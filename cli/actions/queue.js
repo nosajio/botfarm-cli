@@ -2,9 +2,9 @@ const debug = require('debug')('botfarm:cli:queueActions');
 const error = require('debug')('botfarm:error:cli:queueActions');
 const Table = require('cli-table');
 const ora = require('ora');
-const db = require('db');
-const queue = require('queue');
-const { dueInString } = require('helpers/times');
+const db = require('core/db');
+const queue = require('core/queue');
+const { dueInString } = require('core/helpers/times');
 
 module.exports = queueActions;
 

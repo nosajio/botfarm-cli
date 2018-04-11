@@ -2,8 +2,8 @@ const debug = require('debug')('botfarm:cli:console');
 const error = require('debug')('botfarm:error:cli');
 const blessed = require('blessed');
 const is = require('is_js');
-const { outputs } = require('db');
-const { dueInString, timeString, friendlyRuntime } = require('helpers/times');
+const { outputs } = require('core/db');
+const { dueInString, timeString, friendlyRuntime } = require('core/helpers/times');
 
 /**
  * 

@@ -2,8 +2,8 @@ const debug = require('debug')('botfarm:bots:loader');
 const error = require('debug')('botfarm:error:bots:loader');
 const path = require('path');
 const is = require('is_js');
-const { queue, repos } = require('db');
-const { repoWithBotfile, getBotfile } = require('repos');
+const { queue, repos } = require('core/db');
+const { repoWithBotfile, getBotfile } = require('core/repos');
 const { botPath } = require('./bot-path');
 
 

@@ -1,6 +1,6 @@
 const debug = require('debug')('botfarm:cli:updateAction');
 const error = require('debug')('botfarm:error:cli:updateAction');
-const { update: { updateOne, updateAll } } = require('repos');
+const { update: { updateOne, updateAll } } = require('core/repos');
 
 
 /**

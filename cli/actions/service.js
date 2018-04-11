@@ -1,5 +1,5 @@
 const error = require('debug')('botfarm:error:cli:service');
-const daemon = require('service/daemon');
+const daemon = require('core/service/daemon');
 
 module.exports = serviceActions;
 

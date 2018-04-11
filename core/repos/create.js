@@ -1,4 +1,4 @@
-const { repos } = require('db');
+const { repos } = require('core/db');
 const gitCmd = require('./git-cmd');
 const profile = require('./profile');
 const initRepo = require('./init-repo');

@@ -1,7 +1,7 @@
 const debug = require('debug')('botfarm:capture');
 const error = require('debug')('botfarm:error:capture');
 const path = require('path');
-const { outputs } = require('db');
+const { outputs } = require('core/db');
 
 /**
  * Save a regular bot output

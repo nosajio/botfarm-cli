@@ -1,7 +1,7 @@
 const debug = require('debug')('botfarm:cli:repoActions');
 const error = require('debug')('botfarm:error:cli:repoActions');
 const ora = require('ora');
-const daemon = require('service/daemon');
+const daemon = require('core/service/daemon');
 
 const addRepo = require('./action-add');
 const listRepos = require('./action-list');

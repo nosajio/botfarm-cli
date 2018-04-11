@@ -1,4 +1,4 @@
-const startService = require('service/start');
+const startService = require('core/service/start');
 
 const start = () => {
   try {

@@ -1,4 +1,4 @@
-const { queue } = require('db');
+const { queue } = require('core/db');
 
 /**
  * Functions for adding and removing items from the queue

@@ -1,6 +1,6 @@
 const error = require('debug')('botfarm:error:queue:update');
 const debug = require('debug')('botfarm:queue:update');
-const { autorun } = require('botfiles');
+const { autorun } = require('core/botfiles');
 const pushToQueue = require('./push');
 
 const updateForBots = async bots => {

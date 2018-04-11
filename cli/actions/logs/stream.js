@@ -2,7 +2,7 @@ const debug = require('debug')('botfarm:cli:streamLogs');
 const error = require('debug')('botfarm:error:cli:streamLogs');
 const { Readable } = require('stream');
 const is = require('is_js');
-const db = require('db');
+const db = require('core/db');
 const { formatLogEntry } = require('./fmt');
 
 // Used for keeping track of the last log that was streamed. This will put less 

@@ -1,7 +1,7 @@
 const debug = require('debug')('botfarm:cli:console');
 const error = require('debug')('botfarm:error:cli');
 const blessed = require('blessed');
-const { statusBool } = require('service/daemon');
+const { statusBool } = require('core/service/daemon');
 
 function update(statusBox) {
   const running = statusBool();

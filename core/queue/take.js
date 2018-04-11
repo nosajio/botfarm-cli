@@ -1,4 +1,4 @@
-const { queue } = require('db');
+const { queue } = require('core/db');
 
 /**
  * Take items from the queue

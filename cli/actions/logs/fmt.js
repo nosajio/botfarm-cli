@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const { friendlyRuntime } = require('helpers/times');
+const { friendlyRuntime } = require('core/helpers/times');
 
 const label = msg => chalk`{bgWhiteBright.black.bold ${msg}}`
 
