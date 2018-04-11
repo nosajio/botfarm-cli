@@ -5,7 +5,11 @@ const is = require('is_js');
 const binFile = path.resolve(__dirname, '..', 'cli', 'bin.js');
 
 // Only make the app return errors when running tests
-const envStr = 'DEBUG=botfarm:error:*';
+let envStr = 'DEBUG=botfarm:error:*';
+
+if (process.env.TESTING) {
+  envStr += ' TESTING=true';
+}
 
 /**
  * Wrapper for testing of the the command line interface
@@ -24,7 +28,7 @@ function cliCmd(cmd, args='') {
     exec(fullCommand, (err, stdout, stderr) => {
       resolve([stdout, stderr]);
     });
-  })
+  });
 }
 
 module.exports = cliCmd

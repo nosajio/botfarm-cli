@@ -18,7 +18,7 @@ function seed() {
   // Load db after the database file has been created. This is important because
   // simply requiring the db, it will automatically try to connect to the 
   // database.
-  const db = require('db');
+  const db = require('core/db');
 
   // Edit the schema.sql file to modify the schema
   const seedSQL = readFileSync(path.resolve(__dirname, 'schema.sql'), 'utf8');

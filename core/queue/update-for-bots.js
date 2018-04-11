@@ -4,7 +4,7 @@ const { autorun } = require('core/botfiles');
 const pushToQueue = require('./push');
 
 const updateForBots = async bots => {
-  if (!bots) {
+  if (! bots) {
     return null;
   }
   const withTimes = bots.map(bot => ({ ...bot, time: autorun.parseRunTime(bot.autorun)[0] }));
