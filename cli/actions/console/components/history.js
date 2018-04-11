@@ -3,7 +3,7 @@ const error = require('debug')('botfarm:error:cli');
 const blessed = require('blessed');
 const is = require('is_js');
 const { outputs } = require('db');
-const { dueInString, timeString } = require('helpers/times');
+const { dueInString, timeString, friendlyRuntime } = require('helpers/times');
 
 /**
  * 
@@ -29,7 +29,7 @@ function historyTableRow(index, repoName, botName, outType, time, runtime) {
     nameAndStatus = `{green-fg}${repoName}/${botName}{/green-fg}`;
   }
   historyRowL.setContent(`{grey-fg}${timeString(time)}{/grey-fg} ${nameAndStatus}`);    
-  historyRowR.setContent(`{right}${runtime}ms{/}`);
+  historyRowR.setContent(`{right}${friendlyRuntime(runtime)}{/}`);
   historyRow.append(historyRowL);
   historyRow.append(historyRowR);
   // historyRow.setContent(`${repoName}/${botName}`);

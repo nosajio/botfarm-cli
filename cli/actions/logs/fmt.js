@@ -1,8 +1,9 @@
 const chalk = require('chalk');
+const { friendlyRuntime } = require('helpers/times');
 
 const label = msg => chalk`{bgWhiteBright.black.bold ${msg}}`
 
-const logHeader = (bot_name, time, type, runtime) => label(`${bot_name} ${time} ${type} [${runtime}ms] ➜ `);
+const logHeader = (bot_name, time, type, runtime) => label(`${bot_name} ${time} ${type} [${friendlyRuntime(runtime)}] ➜ `);
 
 function formatLogEntry(log) {
   const time = new Date(log.time);
