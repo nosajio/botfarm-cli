@@ -25,9 +25,12 @@ function cliCmd(cmd, args='') {
   }
   return new Promise(resolve => {
     const fullCommand = `${envStr} ${binFile} ${cmd} ${args}`;
-    exec(fullCommand, (err, stdout, stderr) => {
-      resolve([stdout, stderr]);
+    let exec_out, exec_err;
+    const child = exec(fullCommand, (err, stdout, stderr) => {
+      exec_out = stdout;
+      exec_err = stderr;
     });
+    child.stdout.on('end', () => resolve([exec_out, exec_err]));
   });
 }
 

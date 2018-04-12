@@ -9,14 +9,21 @@ const testRepoName = '__test-bots__';
 
 describe('profile', () => {
   let p;
-  beforeAll(async () => {
+
+  beforeAll(async (done) => {
     try {
       // Clone the test repo
       const testRepo = path.resolve(__dirname, '..', '..', '..', 'spec', 'test-repo');    
       const [stdout, stderr] = await cliCmd('repos', ['add', testRepo, testRepoName]);
       
-      // Profile the test repo
-      p = await profiler(testRepoName);
+      const getProfileData = async () => {
+        // Profile the test repo
+        p = await profiler(testRepoName);
+        done();
+      }
+      
+      // Workaround to make sure the repo is added in time
+      setTimeout(() => getProfileData(), 1000);
     } catch(err) {
       throw err;
     }
