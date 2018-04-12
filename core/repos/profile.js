@@ -12,7 +12,11 @@ const { repoPath } = require('./repo-path');
  */
 const repoDirList = dir => new Promise(resolve => {
   const ignoredFiles = ['.git', '.gitignore', '.DS_Store'];
-  const absPath = repoPath(dir);
+
+  // When the passed dir isn't already an abs path, make it one with repoPath 
+  const alreadyAbs = dir[0] === '/';
+  const absPath = alreadyAbs ? dir : repoPath(dir);
+
   fs.readdir(absPath, 'utf8', (err, files) => {
     if (err) {
       throw err;

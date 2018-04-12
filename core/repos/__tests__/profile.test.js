@@ -1,23 +1,20 @@
 const is = require('is_js');
 const profiler = require('../profile');
+const path = require('path');
 
 // There will need to be a repo available called test-repo. The repo should be
 // a node project with a package.json file 
-const testRepoName = '__test-bots__';
+const testRepoName = 'test-repo';
 
 describe('profile', () => {
   let p;
 
   beforeAll(async (done) => {
-    p = await profiler(testRepoName);
-    return true;
+    // Abs path...
+    const testRepoPath = path.resolve(__dirname, '..', '..', '..', 'spec', testRepoName);
+    p = await profiler(testRepoPath);
+    done();
   }); // Set a high timeout because sometimes repos take a 
-
-  afterAll(async () => {
-    // Remove the test repo
-    const [stdout, stderr] = await cliCmd('repos', ['remove', testRepoName]);
-    return;
-  });
 
   it('should return an object', () => {
     expect(is.object(p));
