@@ -9,6 +9,8 @@ Like cron with superpowers. You can write scripts (or "bots") and tell them when
   - 📦   **Git**: Sync your own repos of bots with botfarm to make updates easier.
   - 🏃‍♀️  **Easy**: No setup required, just add some bots and you're done!  
 
+![Botfarm console preview](https://a.nosaj.io/botfarm/botfarm-example-2.jpg)
+
 ## Install
 
   - `npm install -g node-gyp`
